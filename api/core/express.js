@@ -1,3 +1,5 @@
+require('rootpath')();
+require('dotenv').config()
 const path = require('path'),
     express = require('express'),
     bodyParser = require('body-parser'),
@@ -28,9 +30,6 @@ const initLocalVariables = app => {
  * Initialize application middleware
  */
 const initMiddleware = app => {
-  // Showing stack errors
-  app.set('showStackError', true);
-
   // Gzip-compression
   app.use(compression());
 
@@ -42,7 +41,7 @@ const initMiddleware = app => {
   app.use(bodyParser.json());
 
   app.use(methodOverride());
-
+  
   // Use third-party middleware
   app.use(cookieParser());
 
@@ -81,15 +80,15 @@ const initServerRoutes = app => {
  */
 const handleErrors = app => {
   app.use((err, req, res, next) => {
-      if (err instanceof SyntaxError && err.status === config.failed && 'body' in err) {
-        resHandler(res, config.failed, true, errorMsg.badInput);
+      if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        resHandler(res, 400, true, errorMsg.badInput);
       } 
   });
 }
 
 const urlError = app => {
   app.use((req, res) => {
-    resHandler(res, config.failed, true, errorMsg.invalidURL);
+    resHandler(res, 400, true, errorMsg.invalidURL);
   });
 }
 
@@ -105,7 +104,7 @@ module.exports.init = () => {
 
   // Initialize Express middleware
   initMiddleware(app);
-
+ 
   // Initialize Helmet security headers
   initHelmetHeaders(app);
 
@@ -117,6 +116,6 @@ module.exports.init = () => {
 
   // global error handling
   handleErrors(app);
-
+  console.log('dsafsd');
   return app;
 };

@@ -4,13 +4,13 @@ module.exports = (req, res) => {
         _id: decoded._id
     }, (err, user) => {
         if (err) {
-            return resHandler(res, config.failed, true, errorMsg.db);
+            return resHandler(res, 400, true, errorMsg.db);
         }
         if (user) {
             user.hashedPassword = user.encryptPassword(req.body.password);
             user.save((err, user) => {
                 if (err) {
-                    return resHandler(res, config.failed, true, errorMsg.db);
+                    return resHandler(res, 400, true, errorMsg.db);
                 }
                 if (user) {
                     const token = auth.generateToken(auth.serializeUser(user));
@@ -27,11 +27,11 @@ module.exports = (req, res) => {
                     };
                     mail(mailOptions)
                         .then(data => resHandler(res, config.success, false, null, null, {}))
-                        .catch(err => resHandler(res, config.failed, true, errorMsg.mail));
+                        .catch(err => resHandler(res, 400, true, errorMsg.mail));
                 }
             });
         } else {
-            return resHandler(res, config.failed, true, errorMsg.invalidUser);
+            return resHandler(res, 400, true, errorMsg.invalidUser);
         }
     });
 }

@@ -13,6 +13,10 @@ Create account on mlab and then make new database host and then copy host url to
 
 DataBase: mongodb://tatiana:asdf1234@ds221631.mlab.com:21631/bbali
 
+For heroku, need to have heroku account installed.
+You can connect github account to heroku and pull repository to heroku.
+Create auto deploy on heroku.
+
 ### Install dependencies 
 
 To install dependencies enter project folder and run following command:

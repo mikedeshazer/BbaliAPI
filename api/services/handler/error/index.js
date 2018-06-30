@@ -1,4 +1,4 @@
-exports.errorHandler = (res, error, status) => {
+module.exports = (res, error, status) => {
 
     const response = {};
 

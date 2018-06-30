@@ -3,7 +3,7 @@ module.exports = (req, res) => {
         email: req.body.email
     }, (err, user) => {
         if (err) {
-            return resHandler(res, config.failed, true, errorMsg.db);
+            return resHandler(res, 400, true, errorMsg.db);
         }
         if (user) {
             const resetExpires = 0.5 * 60 * 60;

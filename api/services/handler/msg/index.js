@@ -1,4 +1,4 @@
-exports.errorMsg = {
+module.exports = {
     db: 'Oops, something wrong. Please contact us',
     exist: 'Alread exists with that email',
     mail: 'Oops, something wrong. Please contact us',

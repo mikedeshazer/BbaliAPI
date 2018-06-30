@@ -1,4 +1,4 @@
-exports.resHandler = (res, status, errorStatus, msg, token, value) => {
+module.exports = (res, status, errorStatus, msg, token, value) => {
     if (errorStatus) {
         res.status(status).send({
             error: errorStatus,
