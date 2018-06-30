@@ -1,3 +1,10 @@
+const handler = require('api/services/handler');
+const auth = require('api/services/auth');
+const mail = require('api/services/mail');
+const User = require('api/models/user.js');
+const resHandler = handler.resHandler;
+const errorMsg = handler.errorMsg;
+
 module.exports = (req, res) => {
     User.findOne({
         email: req.body.email
@@ -18,15 +25,13 @@ module.exports = (req, res) => {
                         from: process.env.MAIL_HOST,
                         to: req.body.email,
                         subject: 'Welcome!',
-                        template: config.email.templates.activate,
-                        context: {
-                            name: 'there!',
-                            token: token
-                        }
+                        text: 'activate',
+                        html: `<h1>Hi, welcome!</h1><br> Click link below to verify account.<br>
+                        <a href='${process.env.HOST}:${process.env.PORT}/user/verify_account?token=${token}'>Verify account</a>`
                     };
                     mail(mailOptions)
                         .then(data => resHandler(res, 200, false, null, token))
-                        .catch(err => resHandler(res, 400, true, errorMsg.mail));
+                        .catch(err => resHandler(err, 400, true, errorMsg.mail));
                 }
             });
         }

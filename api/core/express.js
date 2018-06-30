@@ -22,6 +22,7 @@ const initLocalVariables = app => {
   app.use((req, res, next) => {
     res.locals.host = req.protocol + '://' + req.hostname;
     res.locals.url = req.protocol + '://' + req.headers.host + req.originalUrl;
+    console.log(res.locals.url);
     next();
   });
 };
@@ -116,6 +117,6 @@ module.exports.init = () => {
 
   // global error handling
   handleErrors(app);
-  console.log('dsafsd');
+
   return app;
 };

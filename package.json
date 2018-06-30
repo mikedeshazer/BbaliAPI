@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/BeautifulCodeStar/BbaliAPI#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "async": "^2.6.1",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",

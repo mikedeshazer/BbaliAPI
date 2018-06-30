@@ -8,6 +8,7 @@ const setupApiRoutes = require('api/routes');
 
 exports.checkAuth = permissions => {
   return (req, res, next) => {
+    console.log('token:', token)
     const token = req.query.Authorization || req.headers.authorization || req.query.token;
     if (!token) {
       return resHandler(res, 400, true, errorMsg.unauth);
@@ -23,7 +24,7 @@ exports.checkAuth = permissions => {
 };
 
 exports.serializeUser = user => {
-  const userData = _.pick(user, ['username']);
+  const userData = _.pick(user, ['email']);
   userData._id = String(user._id);
   return userData;
 };
@@ -31,10 +32,11 @@ exports.serializeUser = user => {
 exports.generateToken = (user, expires) => {
   if(!expires)
     expires = 7 * 24 * 60 * 60;
+  const secret = 'xy219287dJson_Web_Token';
 
   return jwt.sign(
     user,
-    true,
+    secret,
     { expiresIn: expires }
   );
 };

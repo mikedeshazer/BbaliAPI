@@ -23,13 +23,13 @@ exports.signup = () => {
         if (phoneNumber && !phoneRegex.test(phoneNumber)) {
           return resHandler(res, 400, true, errorMsg.invalidPhone);
         }
-    
         next();
     }
 }
 
 exports.changePassword = () => {
     return (req, res, next) => {
+        const password = req.body.password;
         if (!password || !pwdRegex.test(password)) {
             return resHandler(res, 400, true, errorMsg.invalidPwd);
         }
@@ -39,10 +39,10 @@ exports.changePassword = () => {
 
 exports.checkEmail = () => {
     return (req, res, next) => {
+        const email = req.body.email;
         if (!email || !emailRegex.test(email)) {
             return resHandler(res, 400, true, errorMsg.invalidEmail);
         }
-      
         next();
     }
 }
