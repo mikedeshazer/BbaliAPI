@@ -23,7 +23,7 @@
     "url": "https://github.com/BeautifulCodeStar/BbaliAPI/issues"
   },
   "engines": {
-    "node": "8.11.1"
+    "node": "*"
   },
   "homepage": "https://github.com/BeautifulCodeStar/BbaliAPI#readme",
   "dependencies": {
