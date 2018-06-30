@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
+    "postinstall": "cd bbali-app && npm install",
     "start:prod": "NODE_ENV=production node server.js"
   },
   "repository": {
