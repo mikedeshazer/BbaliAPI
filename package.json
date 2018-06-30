@@ -1,0 +1,51 @@
+{
+  "name": "bbali-api",
+  "version": "1.0.0",
+  "description": "API for an e-vehicle rental app",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "start:prod": "NODE_ENV=production node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BeautifulCodeStar/BbaliAPI.git"
+  },
+  "keywords": [
+    "vehicle",
+    "rental",
+    "api",
+    "node"
+  ],
+  "author": "tatiana",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BeautifulCodeStar/BbaliAPI/issues"
+  },
+  "homepage": "https://github.com/BeautifulCodeStar/BbaliAPI#readme",
+  "dependencies": {
+    "async": "^2.6.1",
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.1",
+    "compression": "^1.7.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "helmet": "^3.12.1",
+    "isdev": "^1.0.1",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
+    "method-override": "^2.3.10",
+    "mongoose": "^5.1.7",
+    "nodemailer": "^4.6.7",
+    "nodemailer-express-handlebars": "^3.0.0",
+    "password-hash": "^1.2.2",
+    "rootpath": "^0.1.2",
+    "throng": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
