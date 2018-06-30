@@ -6,9 +6,10 @@ module.exports = (req, res) => {
             return resHandler(res, config.failed, true, errorMsg.db);
         }
         if (user) {
+            const resetExpires = 0.5 * 60 * 60;
             const token = auth.generateToken({
                 _id: user._id
-            }, config.jwt.resetExpires);
+            }, resetExpires);
 
             const mailOptions = {
                 from: process.env.MAIL_HOST,
@@ -21,10 +22,10 @@ module.exports = (req, res) => {
                 }
             };
             mail(mailOptions)
-                .then(data => resHandler(res, config.success, false, null, null, {}))
-                .catch(err => resHandler(res, config.failed, true, errorMsg.mail));
+                .then(data => resHandler(res, 200, false, null, null, {}))
+                .catch(err => resHandler(res, 400, true, errorMsg.mail));
         } else {
-            return resHandler(res, config.failed, true, errorMsg.invalidUser);
+            return resHandler(res, 400, true, errorMsg.invalidUser);
         }
     });
 }

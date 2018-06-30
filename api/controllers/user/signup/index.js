@@ -5,7 +5,7 @@ module.exports = (req, res) => {
         if (err) {
             resHandler(res, 400, true, errorMsg.db);
         } else if (result) {
-            resHandler(res, config.failed, true, errorMsg.exist);
+            resHandler(res, 400, true, errorMsg.exist);
         } else if (!result) {
             const user = new User(req.body);
             user.save((err, user) => {

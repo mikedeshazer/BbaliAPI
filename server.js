@@ -16,7 +16,7 @@ const mongoose = require('mongoose');
 const log = console.log;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DB_HOST, { userMongoClient: true });
+mongoose.connect(process.env.DB_HOST);
 
 const startWorker = (workerId, cb) => {
     const app = express.init();

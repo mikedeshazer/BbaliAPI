@@ -7,7 +7,11 @@ You need to have installed Node.js and MongoDB, and set environemnt for database
 
 You can find .env file on root directory. Set your host info before starting.
 
-DataBase: mongodb://localhost:27017/bbali
+To deploy project to heroku with MongoDB and NodeJS, you need to have account on https://mlab.com to deploy database.
+
+Create account on mlab and then make new database host and then copy host url to env file's DB_HOST field
+
+DataBase: mongodb://tatiana:asdf1234@ds221631.mlab.com:21631/bbali
 
 ### Install dependencies 
 
