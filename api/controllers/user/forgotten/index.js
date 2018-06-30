@@ -26,7 +26,7 @@ module.exports = (req, res) => {
                         }
                     };
                     mail(mailOptions)
-                        .then(data => resHandler(res, config.success, false, null, null, {}))
+                        .then(data => resHandler(res, 200, false, null, null, {}))
                         .catch(err => resHandler(res, 400, true, errorMsg.mail));
                 }
             });

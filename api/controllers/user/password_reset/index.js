@@ -17,7 +17,7 @@ module.exports = (req, res) => {
                 subject: 'Reset Password',
                 template: config.email.templates.reset,
                 context: {
-                    name: user.firstName,
+                    name: user.email,
                     token: token
                 }
             };
