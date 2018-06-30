@@ -4,8 +4,8 @@
   "description": "API for an e-vehicle rental app",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js, npm postinstall",
-    "postinstall": "cd bbali-app && npm install",
+    "start": "npm install;nodemon server.js",
+    "postinstall": "npm install;npm start",
     "start:prod": "NODE_ENV=production node server.js"
   },
   "repository": {
