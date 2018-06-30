@@ -40,7 +40,7 @@ const signIn = (req, res) => {
       if (result.checkPassword(req.body.password)) {
         const token = auth.generateToken({_id: result._id});
 
-        return resHandler(res, config.success, false, null, null, { token: token, firstName: result.firstName });
+        return resHandler(res, config.success, false, null, null, { token: token });
       } else {
         return resHandler(res, config.failed, true, errorMsg.dismatch);
       }
@@ -78,7 +78,6 @@ const resetPassword = (req, res) => {
 
         const params = {
           email: user.email,
-          firstName: user.firstName,
           token: token
         }
 

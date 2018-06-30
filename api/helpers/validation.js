@@ -3,7 +3,6 @@ const resHandler = require('./res-handler'),
       errorMsg = require('./error-msg');
 
 const emailRegex = /^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*(\+[A-Za-z0-9-]+)?@[A-Za-z0-9-]+(\.[A-Za-z0-9-]{2,})*$/,
-      nameRegex = /^(?=[a-zA-Z-\s]{2,}$)^[a-zA-Z\s]+(-[a-zA-Z\s]+)*$/,
       phoneRegex = /^\d+$/,
       passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
@@ -11,8 +10,6 @@ exports.signup = () => {
   return (req, res, next) => {
     console.log("form:\n", req.body);
     const email = req.body.email,
-      firstName = req.body.firstName,
-      lastName = req.body.lastName,
       password = req.body.password,
       phoneNumber = req.body.phoneNumber;
 
@@ -20,15 +17,11 @@ exports.signup = () => {
       return resHandler(res, config.failed, true, errorMsg.invalidEmail);
     }
 
-    if (!firstName || !lastName || !nameRegex.test(firstName) || !nameRegex.test(lastName)) {
-      return resHandler(res, config.failed, true, errorMsg.invalidName);
-    }
-
     if (!password || !passwordRegex.test(password)) {
       return resHandler(res, config.failed, true, errorMsg.invalidPwd);
     }
     
-    if (phoneNumber && !phoneRegex.test(phoneNumber)) {
+    if (!phoneNumber && !phoneRegex.test(phoneNumber)) {
       return resHandler(res, config.failed, true, errorMsg.invalidPhone);
     }
 

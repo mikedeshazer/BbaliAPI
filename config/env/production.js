@@ -1,4 +1,4 @@
-const connectionString = process.env.SITE_MONGO_URI || "mongodb://127.0.0.1:27017/bbali",
+const connectionString = process.env.SITE_MONGO_URI || "mongodb://bblia-user:Mlab-database111@ds125021.mlab.com:25021/bblia",
   format = process.env.LOG_FORMAT || 'combined',
   directoryPath = process.env.LOG_DIR_PATH || process.cwd(),
   fileName1 = process.env.LOG_FILE || 'access.log',
@@ -11,11 +11,11 @@ module.exports = {
   db: {
     connectionString: connectionString
   },
-  serverUrl: "",
+  serverUrl: "https://bblia.herokuapp.com",
   log: {
     format: format,
     options: {
-      stream: {
+      _stream: {
         directoryPath: directoryPath,
         fileName: fileName1,
         rotatingLogs: { // for more info on rotating logs - https://github.com/holidayextras/file-stream-rotator#usage

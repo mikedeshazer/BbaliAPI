@@ -4,18 +4,6 @@ const crypto = require('crypto');
 let Schema = mongoose.Schema;
 
 let User = new Schema({
-  firstName: {
-    type: String,
-    required: true
-  },
-  lastName: {
-    type: String,
-    required: true
-  },
-  dob: {
-    type: String,
-    default: null
-  }, // Date of Birth
   email: {
     type: String,
     unique: true,

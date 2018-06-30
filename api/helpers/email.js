@@ -14,17 +14,11 @@ module.exports = (params) => {
       from: 'noreply@bblia.com',
       subject: 'Bblia API',
       text: 'Request password reset',
-      html: `Hi, ${params.firstName} <br>, 
-            You have requested a password reset. Please click <a href="${config.serverUrl}activate/${params.token}">here!</a> to set a new password.`
+      html: `Hi, You have requested a password reset. Please click <a href="${config.serverUrl}authorization/change-password/${params.token}">here!</a> to set a new password.`
     };
-    console.log(msg.html);
-    sgMail.send(msg, function(err, body) {
-      if (err) {
-        reject(err);
-      }
-      else {
-        resolve(body);
-      }
-    });
+
+    sgMail.send(msg)
+      .then(result => resolve(result))
+      .catch(err => reject(err))
   });
 }
