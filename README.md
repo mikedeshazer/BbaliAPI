@@ -22,12 +22,18 @@ There are two way to deploy to heroku.
 
 2. in project folder, you need to init folder with git.
 Login to the heroku on local using cmd(command pormpt) or terminal(mac)
-in the root folder of project, open with cmd
+in the root folder of project, open with cmd.
+
 ```
+
 heroku create
+
 git add .
+
 git commit -m "heroku"
+
 git push heroku master
+
 ```
 
 ### Install dependencies 
