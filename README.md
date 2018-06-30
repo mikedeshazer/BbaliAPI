@@ -66,7 +66,7 @@ payload:
 
 ***** Change Password endpoint
 ```
-http POST /user/changePassword Authorization:'PUT_YOUR_TOKEN_HERE'
+http POST /user/password_reset Authorization:'PUT_YOUR_TOKEN_HERE'
 
 payload:
 {
