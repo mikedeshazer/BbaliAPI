@@ -13,11 +13,11 @@ exports.checkAuth = permissions => {
   return (req, res, next) => {
     const token = req.query.Authorization || req.headers.authorization || req.query.token;
     if (!token) {
-      return resHandler(res, config.failed, true, errorMsg.unauth);
+      return resHandler(res, config.failed, true, errorMsg.unauthorized);
     }
     jwt.verify(token, config.jwt.secret, (err, decoded) => {
       if (err) {
-        return resHandler(res, config.failed, true, errorMsg.unauth);
+        return resHandler(res, config.failed, true, errorMsg.unauthorized);
       }
       req.token = decoded;
       console.log(req.token);

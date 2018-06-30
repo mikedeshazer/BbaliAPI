@@ -52,11 +52,13 @@ const signIn = (req, res) => {
 
 const changePassword = (req, res) => {
   const decoded = req.token;
-
+  
   User.findById({ _id: decoded._id })
     .then(user => {
-      user.hashedPassword = user.encryptPassword(req.body.password);
-      return user.save();
+      if (user) {
+        user.hashedPassword = user.encryptPassword(req.body.password);
+        return user.save();
+      }
     })
     .then(user => {
       if (user) {
