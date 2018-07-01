@@ -1,7 +1,7 @@
 require('rootpath')();
 require('dotenv').config()
 
-const isDev = require('isDev');
+const isDev = require('isdev');
 
 if (isDev) {
     process.env.NODE_ENV = 'development';
