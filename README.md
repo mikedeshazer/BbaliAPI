@@ -7,12 +7,15 @@ You need to have installed Node.js and MongoDB
 DataBase: mongodb://localhost:27017/bbali in Development Environment
 
 DataBase: mongodb://bblia-user:Mlab-database111@ds125021.mlab.com:25021/bblia in Production Environment
+
 To create mongodb instance, please follow below steps:
+
 ```
 1. Create acount at https://mlab.com [guide](https://docs.mlab.com/)
 2. Create New Instance
 3. Select Plans, Cloud Provider and Cloud Region (current one is free version, and seleted AWS as clould provider.)
 4. Input DB name and create DB user and passowrd.
+```
 
 ### Install dependencies 
 
