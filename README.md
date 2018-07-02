@@ -6,6 +6,14 @@ You need to have installed Node.js and MongoDB
 
 DataBase: mongodb://localhost:27017/bbali in Development Environment
 
+DataBase: mongodb://bblia-user:Mlab-database111@ds125021.mlab.com:25021/bblia in Production Environment
+To create mongodb instance, please follow below steps:
+```
+1. Create acount at https://mlab.com [guide](https://docs.mlab.com/)
+2. Create New Instance
+3. Select Plans, Cloud Provider and Cloud Region (current one is free version, and seleted AWS as clould provider.)
+4. Input DB name and create DB user and passowrd.
+
 ### Install dependencies 
 
 To install dependencies enter project folder and run following command:
@@ -24,16 +32,16 @@ npm start
 
 To run server on heroku, please follow below steps:
 ```
-1. Create account at * https://dashboard.heroku.com/apps
-2. Install Heroku CLI * [guide](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up)
+1. Create account at (https://dashboard.heroku.com/apps)
+2. Install Heroku CLI [guide](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up)
 3. Execute followings inside folder, where Node app is located, on Terminal for Mac or Command Line for Windows
-	- heroku login (enter your heroku crendentials)
+	- `heroku login` (enter your heroku crendentials)
 	- Create app
 	  * login heroku account and create app in UI. 
 	  * heroku create (once execute this command, local repository is connected to created app repository in heroku, please confirm by execute `git remote`)
-	- git push heroku master
-	- heroku ps:scale web=1 (check it app is running or not.)
-	- heroku logs (check logs)
+	- `git push heroku master`
+	- `heroku ps:scale web=1` (check it app is running or not.)
+	- `heroku logs` (check logs)
 ```
 
 ### Endpoints Description and sample payload
