@@ -20,7 +20,7 @@ exports.checkAuth = permissions => {
         return resHandler(res, config.failed, true, errorMsg.unauthorized);
       }
       req.token = decoded;
-      console.log(req.token);
+
       return next();
     });
   };

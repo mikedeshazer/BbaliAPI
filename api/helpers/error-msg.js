@@ -7,5 +7,6 @@ module.exports = {
   invalidPwd: 'Your password should contain a minimum of 8 characters, including at least 1 uppercase letter and 1 number',
   invalidPhone: 'Invalid Phone Number',
   dismatch: 'Invalid username or password',
-  unauthorized: 'Unauthorized user'
+  unauthorized: 'Unauthorized user',
+  NoExist: 'Profile not exist'
 }

@@ -15,7 +15,7 @@ module.exports = {
   log: {
     format: format,
     options: {
-      _stream: {
+      stream: {
         directoryPath: directoryPath,
         fileName: fileName1,
         rotatingLogs: { // for more info on rotating logs - https://github.com/holidayextras/file-stream-rotator#usage

@@ -21,7 +21,7 @@ exports.signup = () => {
       return resHandler(res, config.failed, true, errorMsg.invalidPwd);
     }
     
-    if (!phoneNumber && !phoneRegex.test(phoneNumber)) {
+    if (!phoneNumber || !phoneRegex.test(phoneNumber)) {
       return resHandler(res, config.failed, true, errorMsg.invalidPhone);
     }
 
@@ -62,6 +62,23 @@ exports.checkEmail = () => {
     if (!email || !emailRegex.test(email)) {
       return resHandler(res, config.failed, true, errorMsg.invalidEmail);
     }
+    next();
+  }
+}
+
+exports.updateProfile = () => {
+  return (req, res, nex) => {
+    const { email, phoneNumber, password } = req.body;
+    
+    if (email && !emailRegex.test(email))
+      return resHandler(res, config.failed, true, errorMsg.invalidEmail);
+    
+    if (phoneNumber && !phoneRegex.test(phoneNumber))
+      return resHandler(res, config.failed, true, errorMsg.invalidPhone);
+
+    if (password && !passwordRegex.test(password))
+      return resHandler(res, config.failed, true, errorMsg.invalidPwd);
+    
     next();
   }
 }
