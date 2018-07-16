@@ -1,4 +1,13 @@
-node_modules
-package-lock.json
 .DS_Store
-.vscode
+node_modules
+public
+.tmp
+.idea
+.log
+dist
+docs
+.env
+npm-debug.log
+.nyc_output
+coverage
+cassettes
