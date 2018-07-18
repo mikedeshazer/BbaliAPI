@@ -54,6 +54,52 @@ export const create = ({ bodymen: { body } }, res, next) => {
       }
     })
 }
+
+export const createCharger = ({ bodymen: { body } }, res, next) => {
+  body.isCharger = false;
+  body.isApproved = false;
+  body.status = "off";
+  console.log("body:",body);
+  User.create(body)
+    .then((user) => user.chargerView(true))
+    .then(success(res, 201))
+    .catch((err) => {
+      /* istanbul ignore else */
+      if (err.name === 'MongoError' && err.code === 11000) {
+        res.status(409).json({
+          valid: false,
+          param: 'email',
+          message: 'email already registered'
+        })
+      } else {
+        next(err)
+      }
+    })
+}
+
+export const changeStatus = ({ user, bodymen: { body }, params }, res, next) => {
+  if(!params.id){
+    res = "No Id to change Status"
+  }
+  else{
+    User.findById(params.id)
+      .populate('user')
+      .then(notFound(res))
+      .then((charger) => {
+        if(charger.isApproved.toString() === 'true') {
+          Object.assign(charger, body).save();
+          res.status(200).send({data: charger.chargerView(true)});
+        }
+        else{
+          body.status = 'off';
+          Object.assign(charger, body).save();
+          res.status(200).send({error: "YOU_ARE_NOT_APPROVED_BY_ADMIN_YET"});
+        }
+      })
+      .catch(next)
+  }
+}
+
 export const update = ({ bodymen: { body }, params, user }, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)
     .then(notFound(res))

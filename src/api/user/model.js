@@ -17,7 +17,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
     minlength: 6
   },
   name: {
@@ -49,7 +49,15 @@ const userSchema = new Schema({
   etherKey: {
     type: String,
     trim: true
-  }
+  },
+  userLat:{type:String},
+  userLon:{type:String},
+  address:{type:String},
+  description:{type:String},
+  capacity:{type:Number},
+  isCharger:{type:Boolean},
+  isApproved:{type:Boolean},
+  status:{type:String}
 }, {
   timestamps: true
 })
@@ -95,6 +103,29 @@ userSchema.methods = {
 
   authenticate (password) {
     return bcrypt.compare(password, this.password).then((valid) => valid ? this : false)
+  },
+
+  chargerView(full){
+    const view = {
+      // simple view
+      id: this.id,
+      email: this.email,
+      userLat: this.userLat,
+      userLon: this.userLon,
+      address: this.address,
+      description: this.description,
+      isCharger:this.isCharger,
+      status:this.status,
+      isApproved:this.isApproved,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
+
+    }
+
+    return full ? {
+      ...view
+      // add properties for a full view
+    } : view
   }
 }
 

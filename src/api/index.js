@@ -1,6 +1,10 @@
 import { Router } from 'express'
 import user from './user'
 import auth from './auth'
+import vehicle from './vehicle'
+import ride from './ride'
+import rateride from './rateride'
+import rateCard from './rate-card'
 
 const router = new Router()
 
@@ -27,8 +31,11 @@ const router = new Router()
  * @apiParam {String[]} [sort=-createdAt] Order of returned items.
  * @apiParam {String[]} [fields] Fields to be returned.
  */
-router.get('/',res.sendStatus(200));
 router.use('/users', user)
 router.use('/auth', auth)
+router.use('/vehicles', vehicle)
+router.use('/rides', ride)
+router.use('/raterides', rateride)
+router.use('/rate-cards', rateCard)
 
 export default router
