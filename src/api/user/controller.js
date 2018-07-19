@@ -1,8 +1,9 @@
-import { success, notFound } from '../../services/response/'
-import { User } from '.'
-import { bitcoin } from 'bitcoinjs-lib';
+import {success, notFound} from '../../services/response/'
+import {User} from '.'
+import {bitcoin} from 'bitcoinjs-lib'
+import {VehicleDelivery} from '../vehicleDelivery'
 
-export const index = ({ querymen: { query, select, cursor } }, res, next) =>
+export const index = ({querymen: {query, select, cursor}}, res, next) => {
   User.count(query)
     .then(count => User.find(query, select, cursor)
       .then(users => ({
@@ -12,18 +13,21 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     )
     .then(success(res))
     .catch(next)
+}
 
-export const show = ({ params }, res, next) =>
+export const show = ({params}, res, next) => {
   User.findById(params.id)
     .then(notFound(res))
     .then((user) => user ? user.view() : null)
     .then(success(res))
     .catch(next)
+}
 
-export const showMe = ({ user }, res) =>
+export const showMe = ({user}, res) => {
   res.json(user.view(true))
+}
 
-export const create = ({ bodymen: { body } }, res, next) => {
+export const create = ({bodymen: {body}}, res, next) => {
   var bitcoin = require("bitcoinjs-lib");
   var keyPair = bitcoin.ECPair.makeRandom();
   var address = keyPair.getAddress();
@@ -35,8 +39,8 @@ export const create = ({ bodymen: { body } }, res, next) => {
   var wallet = ethers.Wallet.createRandom();
 
   console.log("Address: " + wallet.address);
-   body.etherKey = privateKey;
-    body.etherAddress = wallet.address;
+  body.etherKey = privateKey;
+  body.etherAddress = wallet.address;
 
   User.create(body)
     .then((user) => user.view(true))
@@ -55,11 +59,11 @@ export const create = ({ bodymen: { body } }, res, next) => {
     })
 }
 
-export const createCharger = ({ bodymen: { body } }, res, next) => {
+export const createCharger = ({bodymen: {body}}, res, next) => {
   body.isCharger = false;
   body.isApproved = false;
   body.status = "off";
-  console.log("body:",body);
+  console.log("body:", body);
   User.create(body)
     .then((user) => user.chargerView(true))
     .then(success(res, 201))
@@ -77,30 +81,76 @@ export const createCharger = ({ bodymen: { body } }, res, next) => {
     })
 }
 
-export const changeStatus = ({ user, bodymen: { body }, params }, res, next) => {
-  if(!params.id){
-    res = "No Id to change Status"
-  }
-  else{
-    User.findById(params.id)
+export const createMechanic = ({bodymen: {body}}, res, next) => {
+  body.isMechanic = false;
+  body.isApproved = false;
+  body.status = "off";
+  console.log("body:", body);
+  User.create(body)
+    .then((user) => user.chargerView(true))
+    .then(success(res, 201))
+    .catch((err) => {
+      /* istanbul ignore else */
+      if (err.name === 'MongoError' && err.code === 11000) {
+        res.status(409).json({
+          valid: false,
+          param: 'email',
+          message: 'email already registered'
+        })
+      } else {
+        next(err)
+      }
+    })
+}
+
+export const createDelivery = ({bodymen: {body}}, res, next) => {
+  body.isDelivery = false;
+  body.isApproved = false;
+  body.status = "off";
+  console.log("body:", body);
+  User.create(body)
+    .then((user) => user.chargerView(true))
+    .then(success(res, 201))
+    .catch((err) => {
+      /* istanbul ignore else */
+      if (err.name === 'MongoError' && err.code === 11000) {
+        res.status(409).json({
+          valid: false,
+          param: 'email',
+          message: 'email already registered'
+        })
+      } else {
+        next(err)
+      }
+    })
+}
+
+export const changeStatus = ({user, bodymen: {body}, params}, res, next) => {
+  if (!user._id) {
+    res = 'No Id to change Status'
+  } else {
+    User.findById(user._id)
       .populate('user')
       .then(notFound(res))
       .then((charger) => {
-        if(charger.isApproved.toString() === 'true') {
-          Object.assign(charger, body).save();
-          res.status(200).send({data: charger.chargerView(true)});
-        }
-        else{
-          body.status = 'off';
-          Object.assign(charger, body).save();
-          res.status(200).send({error: "YOU_ARE_NOT_APPROVED_BY_ADMIN_YET"});
+        if ((charger.isCharger === 'false' || charger.isCharger === 'true') || (charger.isMechanic === 'false' || charger.isMechanic === 'true') || (charger.isDelivery === 'false' || charger.isDelivery === 'true')) {
+          if (charger.isApproved.toString() === 'true') {
+            Object.assign(charger, body).save()
+            res.status(200).send({data: charger.chargerView(true)})
+          } else {
+            body.status = 'off'
+            Object.assign(charger, body).save()
+            res.status(401).send({ERROR: 'YOU_ARE_NOT_APPROVED_BY_ADMIN_YET'})
+          }
+        } else {
+          res.status(401).send({ERROR: 'YOU_ARE_NOT_AUTHORIZED_USER'})
         }
       })
       .catch(next)
   }
 }
 
-export const update = ({ bodymen: { body }, params, user }, res, next) =>
+export const update = ({bodymen: {body}, params, user}, res, next) => {
   User.findById(params.id === 'me' ? user.id : params.id)
     .then(notFound(res))
     .then((result) => {
@@ -120,8 +170,9 @@ export const update = ({ bodymen: { body }, params, user }, res, next) =>
     .then((user) => user ? user.view(true) : null)
     .then(success(res))
     .catch(next)
+}
 
-export const updatePassword = ({ bodymen: { body }, params, user }, res, next) =>
+export const updatePassword = ({bodymen: {body}, params, user}, res, next) => {
   User.findById(params.id === 'me' ? user.id : params.id)
     .then(notFound(res))
     .then((result) => {
@@ -137,14 +188,39 @@ export const updatePassword = ({ bodymen: { body }, params, user }, res, next) =
       }
       return result
     })
-    .then((user) => user ? user.set({ password: body.password }).save() : null)
+    .then((user) => user ? user.set({password: body.password}).save() : null)
     .then((user) => user ? user.view(true) : null)
     .then(success(res))
     .catch(next)
+}
 
-export const destroy = ({ params }, res, next) =>
+export const destroy = ({params}, res, next) => {
   User.findById(params.id)
     .then(notFound(res))
     .then((user) => user ? user.remove() : null)
     .then(success(res, 204))
     .catch(next)
+}
+
+export const showOpportunities = ({user, bodymen: {body}, params}, res, next) => {
+  if (!body.lat) {
+    res.status(500).send({error: 'Latitude is required'})
+  } else if (!body.lon) {
+    res.status(500).send({error: 'Longitude Id is required'})
+  } else {
+    if (!body.radius) {
+      body.radius = 10
+    }
+    const coords = [Number(body.lat), Number(body.lon)]
+    console.log(coords)
+    VehicleDelivery.find({
+      loc: {$near: {$geometry: {type: 'Point', coordinates: coords}, $maxDistance: body.radius * 1000}},
+      status: 'Available'
+    })
+      .then(notFound(res))
+      .then((locations) => {
+        res.status(200).send(locations)
+      })
+      .catch(next)
+  }
+}

@@ -66,12 +66,12 @@ const vehicleSchema = new Schema({
   status:{
     type: String,
     required: true,
-    default: "Available"
+    default: 'Available'
   },
-  loc:{
+  loc: {
     type: [Number],
-    default:[0,0],
-    required:true
+    default: [0, 0],
+    required: true
   }
 }, {
   timestamps: true,
@@ -79,8 +79,8 @@ const vehicleSchema = new Schema({
     virtuals: true,
     transform: (obj, ret) => { delete ret._id }
   }
-});
-vehicleSchema.index({loc:'2d'});
+})
+vehicleSchema.index({loc:'2d'})
 vehicleSchema.methods = {
   view (full) {
     const view = {

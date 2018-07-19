@@ -44,7 +44,7 @@ router.post('/',
 
 router.post('/rent',
   token({ required: true }),
-  body({vehicleId, paymentId,rideType,fromShop}),
+  body({vehicleId, paymentId,rideType,fromShop,lat,lon}),
   rent)
 
 /**

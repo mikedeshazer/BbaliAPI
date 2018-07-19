@@ -5,6 +5,17 @@
 - [Auth](#auth)
 	- [Authenticate](#authenticate)
 	
+- [RateCard](#ratecard)
+	- [Create rate card](#create-rate-card)
+	- [Delete rate card](#delete-rate-card)
+	- [Retrieve rate card](#retrieve-rate-card)
+	- [Retrieve rate cards](#retrieve-rate-cards)
+	- [Update rate card](#update-rate-card)
+	
+- [Rateride](#rateride)
+	- [Create rateride](#create-rateride)
+	- [Retrieve raterides](#retrieve-raterides)
+	
 - [Ride](#ride)
 	- [Create ride](#create-ride)
 	- [Delete ride](#delete-ride)
@@ -13,6 +24,10 @@
 	- [Update ride](#update-ride)
 	
 - [User](#user)
+	- [change delivery user status](#change-delivery-user-status)
+	- [Create charger user](#create-charger-user)
+	- [Create delivery user](#create-delivery-user)
+	- [Create mechanics user](#create-mechanics-user)
 	- [Create user](#create-user)
 	- [Delete user](#delete-user)
 	- [Retrieve current user](#retrieve-current-user)
@@ -49,6 +64,121 @@
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>Master access_token.</p>							|
+
+# RateCard
+
+## Create rate card
+
+
+
+	POST /rate-cards
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+| distance			| 			|  <p>Rate card's distance.</p>							|
+| price			| 			|  <p>Rate card's price.</p>							|
+
+## Delete rate card
+
+
+
+	DELETE /rate-cards/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+
+## Retrieve rate card
+
+
+
+	GET /rate-cards/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+
+## Retrieve rate cards
+
+
+
+	GET /rate-cards
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Update rate card
+
+
+
+	PUT /rate-cards/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>admin access token.</p>							|
+| distance			| 			|  <p>Rate card's distance.</p>							|
+| price			| 			|  <p>Rate card's price.</p>							|
+
+# Rateride
+
+## Create rateride
+
+
+
+	POST /raterides
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| rideId			| 			|  <p>Rateride's rideId.</p>							|
+| vehicleName			| 			|  <p>Rateride's vehicleName.</p>							|
+| starRating			| 			|  <p>Rateride's starRating.</p>							|
+| textRating			| 			|  <p>Rateride's textRating.</p>							|
+| userLat			| 			|  <p>Rateride's userLat.</p>							|
+| userLon			| 			|  <p>Rateride's userLon.</p>							|
+
+## Retrieve raterides
+
+
+
+	GET /raterides
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
 
 # Ride
 
@@ -151,6 +281,74 @@
 | loctionDropoffAddress			| 			|  <p>Ride's loctionDropoffAddress.</p>							|
 
 # User
+
+## change delivery user status
+
+
+
+	POST /delivery/status/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>Master access_token.</p>							|
+| status			| String			|  <p>deliveryuser's status.</p>							|
+
+## Create charger user
+
+
+
+	POST /chargers/apply
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>Master access_token.</p>							|
+| email			| String			|  <p>User's email.</p>							|
+| password			| String			|  <p>User's password.</p>							|
+| name			| String			| **optional** <p>User's name.</p>							|
+| picture			| String			| **optional** <p>User's picture.</p>							|
+| role			| String			| **optional** <p>User's role.</p>							|
+
+## Create delivery user
+
+
+
+	POST /delivery/apply
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>Master access_token.</p>							|
+| email			| String			|  <p>User's email.</p>							|
+| password			| String			|  <p>User's password.</p>							|
+| name			| String			| **optional** <p>User's name.</p>							|
+| picture			| String			| **optional** <p>User's picture.</p>							|
+| role			| String			| **optional** <p>User's role.</p>							|
+
+## Create mechanics user
+
+
+
+	POST /mechanics/apply
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>Master access_token.</p>							|
+| email			| String			|  <p>User's email.</p>							|
+| password			| String			|  <p>User's password.</p>							|
+| name			| String			| **optional** <p>User's name.</p>							|
+| picture			| String			| **optional** <p>User's picture.</p>							|
+| role			| String			| **optional** <p>User's role.</p>							|
 
 ## Create user
 

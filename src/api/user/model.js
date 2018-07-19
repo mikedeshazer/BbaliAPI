@@ -57,7 +57,9 @@ const userSchema = new Schema({
   capacity:{type:Number},
   isCharger:{type:Boolean},
   isApproved:{type:Boolean},
-  status:{type:String}
+  status:{type:String},
+  isMechanic : {type : Boolean},
+  isDelivery : {type : Boolean}
 }, {
   timestamps: true
 })
@@ -115,6 +117,8 @@ userSchema.methods = {
       address: this.address,
       description: this.description,
       isCharger:this.isCharger,
+      isMechanic: this.isMechanic,
+      isDelivery : this.isDelivery,
       status:this.status,
       isApproved:this.isApproved,
       createdAt: this.createdAt,
