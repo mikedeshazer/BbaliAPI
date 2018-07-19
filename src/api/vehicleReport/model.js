@@ -53,5 +53,5 @@ vehicleReportSchema.methods = {
 
 const model = mongoose.model('VehicleReport', vehicleReportSchema)
 
-export const vrschema = model.schema
+export const schema = model.schema
 export default model
