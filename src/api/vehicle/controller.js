@@ -138,3 +138,84 @@ export const nearBy = ({user, bodymen: {body}, params}, res, next) => {
       .catch(next)
   }
 }
+
+export const checkout = ({user, bodymen: {body}, params}, res, next) => {
+  if (!body.vehicleName) {
+    res.status(500).send({error: true, msg: 'Vehicle Name is required'})
+  }
+  if (!body.userLat) {
+    res.status(500).send({error: true, msg: 'Latitude is required'})
+  }
+  if (!body.userLon) {
+    res.status(500).send({error: true, msg: 'Longitude is required'})
+  } else {
+    // todo: fetch rent data from db
+    const card = [
+      {description: 'Minutely', rate: '150', currency: 'KWD'},
+      {description: 'Hourly', rate: '5000', currency: 'KWD'},
+      {description: 'Daily', rate: '30000', currency: 'KWD'},
+      {description: 'Weekly', rate: '150000', currency: 'KWD'}
+    ]
+
+    Ride.findOne({vehicleId: body.vehicleName})
+      .then(notFound(res))
+      .then((ride) => {
+        var duration, ratePerUnitTime, rideTotalAmount
+        var count, currency
+        const timeEnded = new Date()
+        const timeStarted = new Date(ride.timeStarted)
+        var seconds = Math.floor((timeEnded - (timeStarted)) / 1000)
+        duration = Math.floor(seconds / 60)
+        if (duration < 60) {
+          count = card.filter(x => x.description === 'Minutely')
+          currency = count[0].currency
+          ratePerUnitTime = count[0].rate
+          rideTotalAmount = duration * ratePerUnitTime
+        } else if (duration >= 60 && duration < 1440) {
+          count = card.filter(x => x.description === 'Hourly')
+          currency = count[0].currency
+          ratePerUnitTime = count[0].rate
+          rideTotalAmount = (duration / 60) * ratePerUnitTime
+        } else if (duration >= 1440 && duration < 10080) {
+          count = card.filter(x => x.description === 'Daily')
+          currency = count[0].currency
+          ratePerUnitTime = count[0].rate
+          rideTotalAmount = (duration / 1440) * ratePerUnitTime
+        } else if (duration >= 10080 && duration < 43200) {
+          count = card.filter(x => x.description === 'weekly')
+          currency = count[0].currency
+          ratePerUnitTime = count[0].rate
+          rideTotalAmount = (duration / 10080) * ratePerUnitTime
+        }
+        console.log(rideTotalAmount)
+        var newRide = {
+          status: 'Completed',
+          timeEnded: timeEnded,
+          duration: duration,
+          ratePerUnitTime: ratePerUnitTime,
+          currency: currency,
+          rideTotalAmount: rideTotalAmount,
+          locationDropoffLat: body.userLat,
+          locationdropOffLon: body.userLon
+        }
+
+        var newVehicle = {
+          status: 'Available',
+          lat: body.userLat,
+          lng: body.userLon,
+          loc: [body.userLat, body.userLon]
+        }
+        Vehicle.findById(body.vehicleName)
+          .then((vehicle) => Object.assign(vehicle, newVehicle).save())
+        Object.assign(ride, newRide).save()
+        var response = {
+          error: false,
+          msg: 'Vehicle Successfully checked out. Ride Completed.',
+          data: ride
+        }
+
+        res.status(200).send(response)
+      })
+      .catch(next)
+  }
+}

@@ -1,14 +1,15 @@
-import { Router } from 'express'
-import { middleware as query } from 'querymen'
-import { middleware as body } from 'bodymen'
-import { token } from '../../services/passport'
-import { create, index, show, update, destroy, rent, nearBy } from './controller'
-import { schema } from './model'
-export Vehicle, { schema } from './model'
+import {Router} from 'express'
+import {middleware as query} from 'querymen'
+import {middleware as body} from 'bodymen'
+import {token} from '../../services/passport'
+import {create, index, show, update, destroy, rent, nearBy, checkout} from './controller'
+import {schema} from './model'
+
+export Vehicle, {schema} from './model'
 
 const router = new Router();
-const {vehicleId,paymentId,rideType,fromShop,range} = "";
-const { qrcodeIdentifier, name, type, currentStatus, lon, lat, description, occupiedByUserId, photoUrl, parkedAddress, parkedDescription, currentLockCode, chargedPercentageEstimate, make, year, model } = schema.tree
+const {vehicleId, paymentId, rideType, fromShop, range} = "";
+const {vehicleName, userLat, userLon, qrcodeIdentifier, name, type, currentStatus, lon, lat, description, occupiedByUserId, photoUrl, parkedAddress, parkedDescription, currentLockCode, chargedPercentageEstimate, make, year, model} = schema.tree
 
 /**
  * @api {post} /vehicles Create vehicle
@@ -38,13 +39,30 @@ const { qrcodeIdentifier, name, type, currentStatus, lon, lat, description, occu
  * @apiError 401 user access only.
  */
 router.post('/',
-  token({ required: true }),
-  body({ qrcodeIdentifier, name, type, currentStatus, lon, lat, description, occupiedByUserId, photoUrl, parkedAddress, parkedDescription, currentLockCode, chargedPercentageEstimate, make, year, model }),
+  token({required: true}),
+  body({
+    qrcodeIdentifier,
+    name,
+    type,
+    currentStatus,
+    lon,
+    lat,
+    description,
+    occupiedByUserId,
+    photoUrl,
+    parkedAddress,
+    parkedDescription,
+    currentLockCode,
+    chargedPercentageEstimate,
+    make,
+    year,
+    model
+  }),
   create)
 
 router.post('/rent',
-  token({ required: true }),
-  body({vehicleId, paymentId,rideType,fromShop,lat,lon}),
+  token({required: true}),
+  body({vehicleId, paymentId, rideType, fromShop, lat, lon}),
   rent)
 
 /**
@@ -59,7 +77,7 @@ router.post('/rent',
  * @apiError 401 user access only.
  */
 router.get('/',
-  token({ required: true }),
+  token({required: true}),
   query(),
   index)
 
@@ -75,7 +93,7 @@ router.get('/',
  * @apiError 401 user access only.
  */
 router.get('/:id',
-  token({ required: true }),
+  token({required: true}),
   show)
 
 /**
@@ -107,8 +125,25 @@ router.get('/:id',
  * @apiError 401 user access only.
  */
 router.put('/:id',
-  token({ required: true }),
-  body({ qrcodeIdentifier, name, type, currentStatus, lon, lat, description, occupiedByUserId, photoUrl, parkedAddress, parkedDescription, currentLockCode, chargedPercentageEstimate, make, year, model }),
+  token({required: true}),
+  body({
+    qrcodeIdentifier,
+    name,
+    type,
+    currentStatus,
+    lon,
+    lat,
+    description,
+    occupiedByUserId,
+    photoUrl,
+    parkedAddress,
+    parkedDescription,
+    currentLockCode,
+    chargedPercentageEstimate,
+    make,
+    year,
+    model
+  }),
   update)
 
 /**
@@ -122,12 +157,17 @@ router.put('/:id',
  * @apiError 401 user access only.
  */
 router.delete('/:id',
-  token({ required: true }),
+  token({required: true}),
   destroy)
 
 router.post('/nearby',
-  token({ required: true }),
+  token({required: true}),
   body({lat, lon, range}),
   nearBy)
+
+router.post('/checkout',
+  token({required: true}),
+  body({vehicleName, userLat, userLon}),
+  checkout)
 
 export default router
