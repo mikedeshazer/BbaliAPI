@@ -35,10 +35,14 @@ const vehicleDeliverySchema = new Schema({
     type: String
   },
   pickup: {
-    type: String
+    type: [Number],
+    default: [0, 0],
+    required: true
   },
   drop: {
-    type: String
+    type: [Number],
+    default: [0, 0],
+    required: true
   },
   deliveryUserId: {
     type: String

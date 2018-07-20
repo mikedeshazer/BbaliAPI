@@ -68,72 +68,6 @@ export const create = ({bodymen: {body}}, res, next) => {
   }
 }
 
-export const createCharger = ({bodymen: {body}}, res, next) => {
-  body.isCharger = false;
-  body.isApproved = false;
-  body.status = "off";
-  console.log("body:", body);
-  User.create(body)
-    .then((user) => user.chargerView(true))
-    .then(success(res, 201))
-    .catch((err) => {
-      /* istanbul ignore else */
-      if (err.name === 'MongoError' && err.code === 11000) {
-        res.status(409).json({
-          valid: false,
-          param: 'email',
-          message: 'email already registered'
-        })
-      } else {
-        next(err)
-      }
-    })
-}
-
-export const createMechanic = ({bodymen: {body}}, res, next) => {
-  body.isMechanic = false;
-  body.isApproved = false;
-  body.status = "off";
-  console.log("body:", body);
-  User.create(body)
-    .then((user) => user.chargerView(true))
-    .then(success(res, 201))
-    .catch((err) => {
-      /* istanbul ignore else */
-      if (err.name === 'MongoError' && err.code === 11000) {
-        res.status(409).json({
-          valid: false,
-          param: 'email',
-          message: 'email already registered'
-        })
-      } else {
-        next(err)
-      }
-    })
-}
-
-export const createDelivery = ({bodymen: {body}}, res, next) => {
-  body.isDelivery = false;
-  body.isApproved = false;
-  body.status = "off";
-  console.log("body:", body);
-  User.create(body)
-    .then((user) => user.chargerView(true))
-    .then(success(res, 201))
-    .catch((err) => {
-      /* istanbul ignore else */
-      if (err.name === 'MongoError' && err.code === 11000) {
-        res.status(409).json({
-          valid: false,
-          param: 'email',
-          message: 'email already registered'
-        })
-      } else {
-        next(err)
-      }
-    })
-}
-
 export const changeStatus = ({user, bodymen: {body}, params}, res, next) => {
   if (!user._id) {
     res = 'No Id to change Status'
@@ -141,18 +75,25 @@ export const changeStatus = ({user, bodymen: {body}, params}, res, next) => {
     User.findById(user._id)
       .populate('user')
       .then(notFound(res))
-      .then((charger) => {
-        if ((charger.isCharger === 'false' || charger.isCharger === 'true') || (charger.isMechanic === 'false' || charger.isMechanic === 'true') || (charger.isDelivery === 'false' || charger.isDelivery === 'true')) {
-          if (charger.isApproved.toString() === 'true') {
-            Object.assign(charger, body).save()
-            res.status(200).send({data: charger.chargerView(true)})
+      .then((data) => {
+        if ((data.isCharger === 'true') || (data.isMechanic === 'true') || (data.isDelivery === 'true')) {
+          if (data.isApproved.toString() === 'true') {
+            Object.assign(data, body).save()
+            const final = {
+              error: false,
+              msg: 'Status updated',
+              data: {'timstamp': data.createdAt,
+                'status': body.status
+              }
+            }
+            res.status(200).send(final)
           } else {
             body.status = 'off'
-            Object.assign(charger, body).save()
-            res.status(401).send({ERROR: 'YOU_ARE_NOT_APPROVED_BY_ADMIN_YET'})
+            Object.assign(data, body).save()
+            res.status(401).send({ERROR: 'You are not APPROVED user'})
           }
         } else {
-          res.status(401).send({ERROR: 'YOU_ARE_NOT_AUTHORIZED_USER'})
+          res.status(401).send({ERROR: 'You are not AUTHORIZED person'})
         }
       })
       .catch(next)
@@ -212,23 +153,22 @@ export const destroy = ({params}, res, next) => {
 }
 
 export const showOpportunities = ({user, bodymen: {body}, params}, res, next) => {
-  if (!body.lat) {
+  if (!body.userLat) {
     res.status(500).send({error: 'Latitude is required'})
-  } else if (!body.lon) {
+  } else if (!body.userLon) {
     res.status(500).send({error: 'Longitude Id is required'})
   } else {
     if (!body.radius) {
       body.radius = 10
     }
-    const coords = [Number(body.lat), Number(body.lon)]
-    console.log(coords)
+    const coords = [Number(body.userLat), Number(body.userLon)]
     VehicleDelivery.find({
-      loc: {$near: {$geometry: {type: 'Point', coordinates: coords}, $maxDistance: body.radius * 1000}},
-      status: 'Available'
+      pickup: {$near: {$geometry: {type: 'Point', coordinates: coords}, $maxDistance: body.radius * 1000}},
+      status: 'pending'
     })
       .then(notFound(res))
       .then((locations) => {
-        res.status(200).send(locations)
+        res.status(200).send({error: false, msg: locations.length + ' Delivery is pending nearby', data: locations})
       })
       .catch(next)
   }

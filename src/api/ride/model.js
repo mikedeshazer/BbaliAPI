@@ -60,6 +60,9 @@ const rideSchema = new Schema({
   fromShop:{
     type: Boolean,
     required:true,
+  },
+  deductCredits: {
+    type: String
   }
 }, {
   timestamps: true,
@@ -78,6 +81,7 @@ rideSchema.methods = {
       timeStarted: this.timeStarted,
       type: this.type,
       duration: this.duration,
+      deductCredits: this.deductCredits,
       ratePerUnitTime: this.ratePerUnitTime,
       currency: this.currency,
       timeEnded: this.timeEnded,

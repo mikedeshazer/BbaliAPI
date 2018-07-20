@@ -7,7 +7,7 @@ import { schema } from './model'
 export VehicleReport, { schema } from './model'
 
 const router = new Router()
-const { vehicleId, message, type, userLatitude, userLongitude } = schema.tree
+const { vehicleName, userEmail, message, type, userLatitude, userLongitude } = schema.tree
 
 /**
  * @api {post} /vehicleReports Create vehicle report
@@ -27,7 +27,7 @@ const { vehicleId, message, type, userLatitude, userLongitude } = schema.tree
  */
 router.post('/',
   token({ required: true }),
-  body({ vehicleId, message, type, userLatitude, userLongitude }),
+  body({ vehicleName, userEmail, message, type, userLatitude, userLongitude }),
   create)
 
 /**

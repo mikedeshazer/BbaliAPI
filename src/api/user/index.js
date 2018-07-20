@@ -2,20 +2,7 @@ import {Router} from 'express'
 import {middleware as query} from 'querymen'
 import {middleware as body} from 'bodymen'
 import {password as passwordAuth, master, token} from '../../services/passport'
-import {
-  index,
-  showMe,
-  show,
-  create,
-  update,
-  updatePassword,
-  destroy,
-  createCharger,
-  changeStatus,
-  createMechanic,
-  createDelivery,
-  showOpportunities
-} from './controller'
+import {index, showMe, show, create, update, updatePassword, destroy} from './controller'
 import {schema} from './model'
 export User, {schema} from './model'
 const router = new Router()
@@ -81,69 +68,6 @@ router.post('/create',
   create)
 
 /**
- * @api {post}/chargers/apply Create charger user
- * @apiName CreateCharger
- * @apiGroup User
- * @apiPermission master
- * @apiParam {String} userAuth Master userAuth.
- * @apiParam {String} email User's email.
- * @apiParam {String{6..}} password User's password.
- * @apiParam {String} [name] User's name.
- * @apiParam {String} [picture] User's picture.
- * @apiParam {String=user,admin} [role=user] User's role.
- * @apiSuccess (Sucess 201) {Object} user User's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Master access only.
- * @apiError 409 Email already registered.
- */
-router.post('/charger/apply',
-  token({required: true}),
-  body({email, userLat, userLon, address, description, capacity}),
-  createCharger)
-
-/**
- * @api {post}/mechanics/apply Create mechanics user
- * @apiName CreateMechanics
- * @apiGroup User
- * @apiPermission master
- * @apiParam {String} userAuth Master userAuth.
- * @apiParam {String} email User's email.
- * @apiParam {String{6..}} password User's password.
- * @apiParam {String} [name] User's name.
- * @apiParam {String} [picture] User's picture.
- * @apiParam {String=user,admin} [role=user] User's role.
- * @apiSuccess (Sucess 201) {Object} user User's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Master access only.
- * @apiError 409 Email already registered.
- */
-router.post('/mechanics/apply',
-  token({required: true}),
-  body({email, userLat, userLon, address, description}),
-  createMechanic)
-
-/**
- * @api {post}/delivery/apply Create delivery user
- * @apiName CreateDelivery
- * @apiGroup User
- * @apiPermission master
- * @apiParam {String} userAuth Master userAuth.
- * @apiParam {String} email User's email.
- * @apiParam {String{6..}} password User's password.
- * @apiParam {String} [name] User's name.
- * @apiParam {String} [picture] User's picture.
- * @apiParam {String=user,admin} [role=user] User's role.
- * @apiSuccess (Sucess 201) {Object} user User's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Master access only.
- * @apiError 409 Email already registered.
- */
-router.post('/delivery/apply',
-  token({required: true}),
-  body({email, userLat, userLon, address, description}),
-  createDelivery)
-
-/**
  * @api {put} /users/:id Update user
  * @apiName UpdateUser
  * @apiGroup User
@@ -190,61 +114,5 @@ router.put('/:id/password',
 router.delete('/:id',
   token({required: true, roles: ['admin']}),
   destroy)
-
-/**
- * @api {post} /chargers/status change charger user status
- * @apiName ChangeStatus
- * @apiGroup User
- * @apiPermission master
- * @apiParam {String} userAuth Master userAuth.
- * @apiParam {String} status chargeruser's status.
- * @apiSuccess (Sucess 201) {Object} user User's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Master access only.
- * @apiError 409 Email already registered.
- */
-router.post('/charger/status',
-  token({required: true}),
-  body({status}),
-  changeStatus)
-
-/**
- * @api {post} /mechanics/status change mechanics user status
- * @apiName ChangeStatus
- * @apiGroup User
- * @apiPermission master
- * @apiParam {String} userAuth Master userAuth.
- * @apiParam {String} status mechanicsuser's status.
- * @apiSuccess (Sucess 201) {Object} user User's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Master access only.
- * @apiError 409 Email already registered.
- */
-router.post('/mechanics/status',
-  token({required: true}),
-  body({status}),
-  changeStatus)
-
-/**
- * @api {post} /delivery/status change delivery user status
- * @apiName ChangeStatus
- * @apiGroup User
- * @apiPermission master
- * @apiParam {String} userAuth Master userAuth.
- * @apiParam {String} status deliveryuser's status.
- * @apiSuccess (Sucess 201) {Object} user User's data.
- * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 401 Master access only.
- * @apiError 409 Email already registered.
- */
-router.post('/delivery/status',
-  token({required: true}),
-  body({status}),
-  changeStatus)
-
-router.post('/delivery/opportunities',
-  token({required: true}),
-  body({userLat, userLon, radius}),
-  showOpportunities)
 
 export default router

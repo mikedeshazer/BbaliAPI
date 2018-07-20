@@ -111,6 +111,22 @@ vehicleSchema.methods = {
       ...view
       // add properties for a full view
     } : view
+  },
+
+  rentView (full) {
+    const view = {
+      // simple view
+      id: this.id,
+      name: this.name,
+      type: this.type,
+      chargedPercentageEstimate: this.chargedPercentageEstimate,
+      status: this.status
+    }
+
+    return full ? {
+      ...view
+      // add properties for a full view
+    } : view
   }
 }
 

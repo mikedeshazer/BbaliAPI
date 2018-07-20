@@ -48,37 +48,77 @@ export const destroy = ({user, params}, res, next) => {
     .catch(next)
 }
 
+function getUnlockCode(str) {
+  console.log('inside getUnlock:', str)
+  String.prototype.hashCode = function () {
+    var hash = 0, i, chr
+    if (this.length === 0) return hash
+    for (i = 0; i < this.length; i++) {
+      chr = this.charCodeAt(i)
+      hash = ((hash << 5) - hash) + chr
+      hash |= 0 // Convert to 32bit integer
+    }
+    return hash
+  }
+  var x = new Date()
+  x.setUTCHours(0)
+  var minutes = x.getMinutes()
+  var minuteDigits = 0
+  x.setSeconds(0)
+  if (minutes > 9) {
+    minuteDigits = minutes.toString().slice(-2, -1)
+  }
+  var minuteDigit = parseInt(minuteDigits)
+  var newMinutes = minuteDigit * 10
+  if (minutes > (newMinutes + 4)) {
+    minuteDigits = newMinutes + 5
+  } else {
+    minuteDigits = newMinutes
+  }
+
+  x.setMinutes(minuteDigits)
+  x.setMilliseconds(0)
+  var timeSeed = x.getTime()
+  console.log(x)
+  var seed = str.hashCode()
+  var rawUnlock = timeSeed / seed
+
+  var unlockCode = rawUnlock.toString().slice(-5, -1)
+  return unlockCode
+}
+
 export const rent = ({user, bodymen: {body}, params}, res, next) => {
-  if (!body.vehicleId) {
+  if (!body.vehicleName) {
     res.status(500).send({error: 'Vehicle Id is required'})
-  } else if (!body.paymentId) {
+  } else if (!body.paymentMethod) {
     res.status(500).send({error: 'Payment Id is required'})
-  } else if (!body.rideType) {
+  } else if (!body.type) {
     res.status(500).send({error: 'Type is required'})
   } else if (!body.fromShop) {
     res.status(500).send({error: 'fromShop is required'})
   } else {
     if (body.fromShop === 'false') {
-      if (!body.lat) {
+      if (!body.pickupLat) {
         res.status(500).send({error: 'User Latitude is required'})
-      } else if (!body.lon) {
+      } else if (!body.pickupLon) {
         res.status(500).send({error: 'User Longitude is required'})
       }
     }
     // TODO : Verify Payment Method of User
-    Vehicle.findById(body.vehicleId)
+    Vehicle.findById(body.vehicleName)
       .then(notFound(res))
       .then((vehicle) => {
         if (vehicle.status === 'Available' || vehicle.status === '') {
           const ride = {
             userId: user,
-            paymentMethodId: body.paymentId,
+            paymentMethodId: body.paymentMethod,
             vehicleId: vehicle,
             locationPickupLat: body.pickupLat,
             locationPickupLon: body.pickupLon,
-            type: body.rideType,
+            type: body.type,
             duration: body.duration,
             fromShop: body.fromShop,
+            deductCredits: body.deductCredits,
             status: 'booked'
           }
           Ride.create(ride)
@@ -88,13 +128,13 @@ export const rent = ({user, bodymen: {body}, params}, res, next) => {
                 const vehicleDelivery = {
                   userId: user,
                   rideId: ride,
-                  pickup: [ride.vehicleId.lat, ride.vehicleId.lon],
-                  drop: [body.lat, body.lon],
+                  pickup: [vehicle.lat, vehicle.lon],
+                  drop: [body.pickupLat, body.pickupLon],
                   vehicleId: ride.vehicleId,
-                  pickupLatitude: ride.vehicleId.lat,
-                  pickupLongitude: ride.vehicleId.lon,
-                  dropLatitude: body.lat,
-                  dropLongitude: body.lon,
+                  pickupLatitude: vehicle.lat,
+                  pickupLongitude: vehicle.lon,
+                  dropLatitude: body.pickupLat,
+                  dropLongitude: body.pickupLon,
                   status: 'pending'
                 }
                 VehicleDelivery.create(vehicleDelivery)
@@ -103,8 +143,9 @@ export const rent = ({user, bodymen: {body}, params}, res, next) => {
               const final = {
                 error: false,
                 msg: 'Vehicle ' + vehicle.name + ' rented.',
-                data: ride
+                data: vehicle.rentView(true)
               }
+              final['data']['unlockCode'] = getUnlockCode(vehicle.id)
               res.status(200).send(final)
             })
             .catch(next)
@@ -134,6 +175,58 @@ export const nearBy = ({user, bodymen: {body}, params}, res, next) => {
       .then(notFound(res))
       .then((locations) => {
         res.status(200).send({error: false, msg: locations.length + ' vehicles nearby', data: locations})
+      })
+      .catch(next)
+  }
+}
+
+export const lock = ({user, bodymen: {body}}, res, next) => {
+  if (!body.vehicleName) {
+    res.status(500).send({error: 'Vehicle Name is required'})
+  }
+  if (!body.userLat) {
+    res.status(500).send({error: 'Latitude is required'})
+  }
+  if (!body.userLon) {
+    res.status(500).send({error: 'Longitude Id is required'})
+  } else {
+    Vehicle.findById(body.vehicleName)
+      .then((vehicle) => {
+        Object.assign(vehicle, {status: 'Locked', lat: body.userLat, lon: body.userLon, loc: [body.userLat, body.userLon]}).save()
+        res.status(200).send({error: false, Msg: 'Ride Locked succesfully'})
+      })
+      .catch(next)
+  }
+}
+
+export const report = ({user, bodymen: {body}}, res, next) => {
+  if (!body.userEmail) {
+    res.status(500).send({error: 'User email is required'})
+  } if (!body.message) {
+    res.status(500).send({error: 'Message is required'})
+  } if (!body.type) {
+    res.status(500).send({error: 'Type is required'})
+  } else {
+    const reportData = {
+      userId: user,
+      userEmail: body.userEmail,
+      vehicleName: body.vehicleName,
+      message: body.message,
+      type: body.type,
+      userLatitude: body.userLat,
+      userLongitude: body.userLon
+    }
+    VehicleReport.create(reportData)
+      .then((data) => {
+        const final = {
+          error: false,
+          msg: 'vehicle report posted',
+          data: {
+            'users message': body.message,
+            'vehicleId': body.vehicleName
+          }
+        }
+        res.status(200).send(final)
       })
       .catch(next)
   }
@@ -219,3 +312,4 @@ export const checkout = ({user, bodymen: {body}, params}, res, next) => {
       .catch(next)
   }
 }
+

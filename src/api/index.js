@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import {Router} from 'express'
 import user from './user'
 import auth from './auth'
 import vehicle from './vehicle'
@@ -7,6 +7,9 @@ import rateride from './rateride'
 import rateCard from './rate-card'
 import vehicleDelivery from './vehicleDelivery'
 import vehicleReport from './vehicleReport'
+import charger from './charger'
+import mechanic from './mechanic'
+import delivery from './delivery'
 
 const router = new Router()
 
@@ -44,5 +47,8 @@ router.use('/raterides', rateride)
 router.use('/rate-cards', rateCard)
 router.use('/vehicleDeliveries', vehicleDelivery)
 router.use('/vehicleReports', vehicleReport)
+router.use('/chargers', charger)
+router.use('/mechanics', mechanic)
+router.use('/deliveries', delivery)
 
 export default router

@@ -2,14 +2,13 @@ import {Router} from 'express'
 import {middleware as query} from 'querymen'
 import {middleware as body} from 'bodymen'
 import {token} from '../../services/passport'
-import {create, index, show, update, destroy, rent, nearBy, checkout} from './controller'
+import {create, index, show, update, destroy, rent, nearBy, lock,report,checkout} from './controller'
 import {schema} from './model'
-
 export Vehicle, {schema} from './model'
 
-const router = new Router();
-const {vehicleId, paymentId, rideType, fromShop, range} = "";
-const {vehicleName, userLat, userLon, qrcodeIdentifier, name, type, currentStatus, lon, lat, description, occupiedByUserId, photoUrl, parkedAddress, parkedDescription, currentLockCode, chargedPercentageEstimate, make, year, model} = schema.tree
+const router = new Router()
+const {vehicleName, userLon, userLat, userEmail, message, userLatitude, userLongitude, deductCredits, paymentMethod, fromShop, duration, range, pickupLat, pickupLon} = ''
+const {qrcodeIdentifier, name, type, currentStatus, lon, lat, description, occupiedByUserId, photoUrl, parkedAddress, parkedDescription, currentLockCode, chargedPercentageEstimate, make, year, model} = schema.tree
 
 /**
  * @api {post} /vehicles Create vehicle
@@ -62,7 +61,7 @@ router.post('/',
 
 router.post('/rent',
   token({required: true}),
-  body({vehicleId, paymentId, rideType, fromShop, lat, lon}),
+  body({vehicleName, paymentMethod, type, duration, fromShop, pickupLat, pickupLon, deductCredits}),
   rent)
 
 /**
@@ -110,8 +109,7 @@ router.get('/:id',
  * @apiParam lat Vehicle's lat.
  * @apiParam description Vehicle's description.
  * @apiParam occupiedByUserId Vehicle's occupiedByUserId.
- * @apiPar
- * 'am photoUrl Vehicle's photoUrl.
+ * @apiParam photoUrl Vehicle's photoUrl.
  * @apiParam parkedAddress Vehicle's parkedAddress.
  * @apiParam parkedDescription Vehicle's parkedDescription.
  * @apiParam currentLockCode Vehicle's currentLockCode.
@@ -164,6 +162,16 @@ router.post('/nearby',
   token({required: true}),
   body({lat, lon, range}),
   nearBy)
+
+router.post('/lock',
+  token({ required: true }),
+  body({ vehicleName, userLat, userLon }),
+  lock)
+
+router.post('/report',
+  token({ required: true }),
+  body({ vehicleName, userEmail, message, type, userLatitude, userLongitude }),
+  report)
 
 router.post('/checkout',
   token({required: true}),

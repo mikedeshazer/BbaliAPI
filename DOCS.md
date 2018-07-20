@@ -1,4 +1,4 @@
-# ridesharing-test v0.0.0
+# ridesharing
 
 
 
@@ -75,7 +75,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>Master userAuth.</p>							|
+| access_token			| String			|  <p>Master access_token.</p>							|
 
 # RateCard
 
@@ -90,7 +90,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>admin access token.</p>							|
+| access_token			| String			|  <p>admin access token.</p>							|
 | distance			| 			|  <p>Rate card's distance.</p>							|
 | price			| 			|  <p>Rate card's price.</p>							|
 
@@ -105,7 +105,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>admin access token.</p>							|
+| access_token			| String			|  <p>admin access token.</p>							|
 
 ## Retrieve rate card
 
@@ -118,7 +118,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>admin access token.</p>							|
+| access_token			| String			|  <p>admin access token.</p>							|
 
 ## Retrieve rate cards
 
@@ -131,7 +131,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>admin access token.</p>							|
+| access_token			| String			|  <p>admin access token.</p>							|
 | q			| String			| **optional** <p>Query to search.</p>							|
 | page			| Number			| **optional** <p>Page number.</p>							|
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|
@@ -149,7 +149,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>admin access token.</p>							|
+| access_token			| String			|  <p>admin access token.</p>							|
 | distance			| 			|  <p>Rate card's distance.</p>							|
 | price			| 			|  <p>Rate card's price.</p>							|
 
@@ -166,7 +166,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | rideId			| 			|  <p>Rateride's rideId.</p>							|
 | vehicleName			| 			|  <p>Rateride's vehicleName.</p>							|
 | starRating			| 			|  <p>Rateride's starRating.</p>							|
@@ -185,7 +185,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | q			| String			| **optional** <p>Query to search.</p>							|
 | page			| Number			| **optional** <p>Page number.</p>							|
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|
@@ -205,7 +205,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | timeStarted			| 			|  <p>Ride's timeStarted.</p>							|
 | type			| 			|  <p>Ride's type.</p>							|
 | duration			| 			|  <p>Ride's duration.</p>							|
@@ -232,7 +232,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 
 ## Retrieve ride
 
@@ -245,7 +245,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 
 ## Retrieve rides
 
@@ -258,7 +258,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | q			| String			| **optional** <p>Query to search.</p>							|
 | page			| Number			| **optional** <p>Page number.</p>							|
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|
@@ -276,7 +276,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | timeStarted			| 			|  <p>Ride's timeStarted.</p>							|
 | type			| 			|  <p>Ride's type.</p>							|
 | duration			| 			|  <p>Ride's duration.</p>							|
@@ -305,7 +305,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>Master userAuth.</p>							|
+| access_token			| String			|  <p>Master access_token.</p>							|
 | status			| String			|  <p>deliveryuser's status.</p>							|
 
 ## Create charger user
@@ -319,7 +319,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>Master userAuth.</p>							|
+| access_token			| String			|  <p>Master access_token.</p>							|
 | email			| String			|  <p>User's email.</p>							|
 | password			| String			|  <p>User's password.</p>							|
 | name			| String			| **optional** <p>User's name.</p>							|
@@ -337,7 +337,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>Master userAuth.</p>							|
+| access_token			| String			|  <p>Master access_token.</p>							|
 | email			| String			|  <p>User's email.</p>							|
 | password			| String			|  <p>User's password.</p>							|
 | name			| String			| **optional** <p>User's name.</p>							|
@@ -355,7 +355,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>Master userAuth.</p>							|
+| access_token			| String			|  <p>Master access_token.</p>							|
 | email			| String			|  <p>User's email.</p>							|
 | password			| String			|  <p>User's password.</p>							|
 | name			| String			| **optional** <p>User's name.</p>							|
@@ -373,7 +373,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>Master userAuth.</p>							|
+| access_token			| String			|  <p>Master access_token.</p>							|
 | email			| String			|  <p>User's email.</p>							|
 | password			| String			|  <p>User's password.</p>							|
 | name			| String			| **optional** <p>User's name.</p>							|
@@ -391,7 +391,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>User userAuth.</p>							|
+| access_token			| String			|  <p>User access_token.</p>							|
 
 ## Retrieve current user
 
@@ -404,7 +404,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>User userAuth.</p>							|
+| access_token			| String			|  <p>User access_token.</p>							|
 
 ## Retrieve user
 
@@ -424,7 +424,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>User userAuth.</p>							|
+| access_token			| String			|  <p>User access_token.</p>							|
 | q			| String			| **optional** <p>Query to search.</p>							|
 | page			| Number			| **optional** <p>Page number.</p>							|
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|
@@ -460,7 +460,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>User userAuth.</p>							|
+| access_token			| String			|  <p>User access_token.</p>							|
 | name			| String			| **optional** <p>User's name.</p>							|
 | picture			| String			| **optional** <p>User's picture.</p>							|
 
@@ -477,7 +477,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | qrcodeIdentifier			| 			|  <p>Vehicle's qrcodeIdentifier.</p>							|
 | name			| 			|  <p>Vehicle's name.</p>							|
 | type			| 			|  <p>Vehicle's type.</p>							|
@@ -506,7 +506,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 
 ## Retrieve vehicle
 
@@ -519,7 +519,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 
 ## Retrieve vehicles
 
@@ -532,7 +532,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | q			| String			| **optional** <p>Query to search.</p>							|
 | page			| Number			| **optional** <p>Page number.</p>							|
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|
@@ -550,7 +550,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | qrcodeIdentifier			| 			|  <p>Vehicle's qrcodeIdentifier.</p>							|
 | name			| 			|  <p>Vehicle's name.</p>							|
 | type			| 			|  <p>Vehicle's type.</p>							|
@@ -559,6 +559,7 @@
 | lat			| 			|  <p>Vehicle's lat.</p>							|
 | description			| 			|  <p>Vehicle's description.</p>							|
 | occupiedByUserId			| 			|  <p>Vehicle's occupiedByUserId.</p>							|
+| photoUrl			| 			|  <p>Vehicle's photoUrl.</p>							|
 | parkedAddress			| 			|  <p>Vehicle's parkedAddress.</p>							|
 | parkedDescription			| 			|  <p>Vehicle's parkedDescription.</p>							|
 | currentLockCode			| 			|  <p>Vehicle's currentLockCode.</p>							|
@@ -580,7 +581,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | rideId			| 			|  <p>Vehicle delivery's rideId.</p>							|
 | rideCreatedat			| 			|  <p>Vehicle delivery's rideCreatedat.</p>							|
 | vehicleId			| 			|  <p>Vehicle delivery's vehicleId.</p>							|
@@ -606,7 +607,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 
 ## Retrieve vehicle deliveries
 
@@ -619,7 +620,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | q			| String			| **optional** <p>Query to search.</p>							|
 | page			| Number			| **optional** <p>Page number.</p>							|
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|
@@ -637,7 +638,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 
 ## Update vehicle delivery
 
@@ -650,7 +651,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | rideId			| 			|  <p>Vehicle delivery's rideId.</p>							|
 | rideCreatedat			| 			|  <p>Vehicle delivery's rideCreatedat.</p>							|
 | vehicleId			| 			|  <p>Vehicle delivery's vehicleId.</p>							|
@@ -678,7 +679,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | vehicleId			| 			|  <p>Vehicle report's vehicleId.</p>							|
 | message			| 			|  <p>Vehicle report's message.</p>							|
 | type			| 			|  <p>Vehicle report's type.</p>							|
@@ -696,7 +697,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 
 ## Retrieve vehicle reports
 
@@ -709,7 +710,7 @@
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| userAuth			| String			|  <p>user access token.</p>							|
+| access_token			| String			|  <p>user access token.</p>							|
 | q			| String			| **optional** <p>Query to search.</p>							|
 | page			| Number			| **optional** <p>Page number.</p>							|
 | limit			| Number			| **optional** <p>Amount of returned items.</p>							|

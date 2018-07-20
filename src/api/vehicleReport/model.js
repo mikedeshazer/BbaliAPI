@@ -6,8 +6,9 @@ const vehicleReportSchema = new Schema({
     ref: 'User',
     required: true
   },
-  vehicleId: {
-    type: String
+  vehicleName: {
+    type: Schema.ObjectId,
+    ref: 'Vehicle'
   },
   message: {
     type: String
@@ -20,6 +21,14 @@ const vehicleReportSchema = new Schema({
   },
   userLongitude: {
     type: String
+  },
+  userEmail: {
+    type: String,
+    match: /^\S+@\S+\.\S+$/,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true
   }
 }, {
   timestamps: true,
@@ -35,7 +44,8 @@ vehicleReportSchema.methods = {
       // simple view
       id: this.id,
       userId: this.userId.view(full),
-      vehicleId: this.vehicleId,
+      vehicleName: this.vehicleName,
+      userEmail: this.userEmail,
       message: this.message,
       type: this.type,
       userLatitude: this.userLatitude,

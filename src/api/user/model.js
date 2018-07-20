@@ -102,7 +102,7 @@ userSchema.methods = {
     return bcrypt.compare(password, this.password).then((valid) => valid ? this : false)
   },
 
-  chargerView(full){
+  otherView(full) {
     const view = {
       // simple view
       id: this.id,
