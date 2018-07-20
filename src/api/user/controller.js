@@ -2,6 +2,7 @@ import {success, notFound} from '../../services/response/'
 import {User} from '.'
 import {bitcoin} from 'bitcoinjs-lib'
 import {VehicleDelivery} from '../vehicleDelivery'
+import {signSync} from "../../services/jwt";
 
 export const index = ({querymen: {query, select, cursor}}, res, next) => {
   User.count(query)
@@ -43,8 +44,16 @@ export const create = ({bodymen: {body}}, res, next) => {
     body.etherKey = privateKey;
     body.etherAddress = wallet.address;
     User.create(body)
-      .then((user) => user.view(true))
-      .then(success(res, 201))
+      .then((user) => {
+        var u = user.view(true)
+        const token = signSync(user.id)
+        const final = {
+          error: false,
+          msg: 'user account successfully created',
+          data: {...u, userAuth: token}
+        }
+        res.status(201).send(final)
+      })
       .catch((err) => {
         /* istanbul ignore else */
         if (err.name === 'MongoError' && err.code === 11000) {
