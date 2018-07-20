@@ -39,7 +39,7 @@ const config = {
   test: { },
   development: {
     mongo: {
-      uri: 'mongodb://test:test123@ds139331.mlab.com:39331/heroku_lz56d5mv',
+      uri: process.env.MONGODB_URI,
       options: {
         debug: true
       }
@@ -49,7 +49,7 @@ const config = {
     ip: process.env.IP || undefined,
     port: process.env.PORT || 8080,
     mongo: {
-      uri: 'mongodb://test:test123@ds139331.mlab.com:39331/heroku_lz56d5mv'
+      uri: process.env.MONGODB_URI
     }
   }
 }
