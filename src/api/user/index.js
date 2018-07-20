@@ -26,7 +26,7 @@ const {phone, email, password, role, userLat, userLon, address, description, cap
  * @apiName RetrieveUsers
  * @apiGroup User
  * @apiPermission admin
- * @apiParam {String} access_token User access_token.
+ * @apiParam {String} userAuth User userAuth.
  * @apiUse listParams
  * @apiSuccess {Object[]} users List of users.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -42,7 +42,7 @@ router.get('/',
  * @apiName RetrieveCurrentUser
  * @apiGroup User
  * @apiPermission user
- * @apiParam {String} access_token User access_token.
+ * @apiParam {String} userAuth User userAuth.
  * @apiSuccess {Object} user User's data.
  */
 router.get('/me',
@@ -65,7 +65,7 @@ router.get('/:id',
  * @apiName CreateUser
  * @apiGroup User
  * @apiPermission master
- * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} userAuth Master userAuth.
  * @apiParam {String} email User's email.
  * @apiParam {String{6..}} password User's password.
  * @apiParam {String} [name] User's name.
@@ -85,7 +85,7 @@ router.post('/create',
  * @apiName CreateCharger
  * @apiGroup User
  * @apiPermission master
- * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} userAuth Master userAuth.
  * @apiParam {String} email User's email.
  * @apiParam {String{6..}} password User's password.
  * @apiParam {String} [name] User's name.
@@ -106,7 +106,7 @@ router.post('/charger/apply',
  * @apiName CreateMechanics
  * @apiGroup User
  * @apiPermission master
- * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} userAuth Master userAuth.
  * @apiParam {String} email User's email.
  * @apiParam {String{6..}} password User's password.
  * @apiParam {String} [name] User's name.
@@ -127,7 +127,7 @@ router.post('/mechanics/apply',
  * @apiName CreateDelivery
  * @apiGroup User
  * @apiPermission master
- * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} userAuth Master userAuth.
  * @apiParam {String} email User's email.
  * @apiParam {String{6..}} password User's password.
  * @apiParam {String} [name] User's name.
@@ -148,7 +148,7 @@ router.post('/delivery/apply',
  * @apiName UpdateUser
  * @apiGroup User
  * @apiPermission user
- * @apiParam {String} access_token User access_token.
+ * @apiParam {String} userAuth User userAuth.
  * @apiParam {String} [name] User's name.
  * @apiParam {String} [picture] User's picture.
  * @apiSuccess {Object} user User's data.
@@ -182,7 +182,7 @@ router.put('/:id/password',
  * @apiName DeleteUser
  * @apiGroup User
  * @apiPermission admin
- * @apiParam {String} access_token User access_token.
+ * @apiParam {String} userAuth User userAuth.
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 401 Admin access only.
  * @apiError 404 User not found.
@@ -196,7 +196,7 @@ router.delete('/:id',
  * @apiName ChangeStatus
  * @apiGroup User
  * @apiPermission master
- * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} userAuth Master userAuth.
  * @apiParam {String} status chargeruser's status.
  * @apiSuccess (Sucess 201) {Object} user User's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -213,7 +213,7 @@ router.post('/charger/status',
  * @apiName ChangeStatus
  * @apiGroup User
  * @apiPermission master
- * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} userAuth Master userAuth.
  * @apiParam {String} status mechanicsuser's status.
  * @apiSuccess (Sucess 201) {Object} user User's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -230,7 +230,7 @@ router.post('/mechanics/status',
  * @apiName ChangeStatus
  * @apiGroup User
  * @apiPermission master
- * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} userAuth Master userAuth.
  * @apiParam {String} status deliveryuser's status.
  * @apiSuccess (Sucess 201) {Object} user User's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.

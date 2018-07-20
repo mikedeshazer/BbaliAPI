@@ -15,7 +15,7 @@ const { timeStarted, type, duration, ratePerUnitTime, currency, timeEnded, payme
  * @apiName CreateRide
  * @apiGroup Ride
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiParam timeStarted Ride's timeStarted.
  * @apiParam type Ride's type.
  * @apiParam duration Ride's duration.
@@ -45,7 +45,7 @@ router.post('/',
  * @apiName RetrieveRides
  * @apiGroup Ride
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiUse listParams
  * @apiSuccess {Object[]} rides List of rides.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -61,7 +61,7 @@ router.get('/',
  * @apiName RetrieveRide
  * @apiGroup Ride
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiSuccess {Object} ride Ride's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Ride not found.
@@ -76,7 +76,7 @@ router.get('/:id',
  * @apiName UpdateRide
  * @apiGroup Ride
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiParam timeStarted Ride's timeStarted.
  * @apiParam type Ride's type.
  * @apiParam duration Ride's duration.
@@ -106,7 +106,7 @@ router.put('/:id',
  * @apiName DeleteRide
  * @apiGroup Ride
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 404 Ride not found.
  * @apiError 401 user access only.

@@ -20,7 +20,7 @@ beforeEach(async () => {
 test('POST /vehicleDeliveries 201 (user)', async () => {
   const { status, body } = await request(app())
     .post(`${apiRoot}`)
-    .send({ access_token: userSession, rideId: 'test', rideCreatedat: 'test', vehicleId: 'test', pickupLatitude: 'test', pickupLongitude: 'test', dropLatitude: 'test', dropLongitude: 'test', status: 'test', pickup: 'test', drop: 'test', deliveryUserId: 'test', deliveryStartTime: 'test', deliveryEndTime: 'test' })
+    .send({ userAuth: userSession, rideId: 'test', rideCreatedat: 'test', vehicleId: 'test', pickupLatitude: 'test', pickupLongitude: 'test', dropLatitude: 'test', dropLongitude: 'test', status: 'test', pickup: 'test', drop: 'test', deliveryUserId: 'test', deliveryStartTime: 'test', deliveryEndTime: 'test' })
   expect(status).toBe(201)
   expect(typeof body).toEqual('object')
   expect(body.rideId).toEqual('test')
@@ -48,7 +48,7 @@ test('POST /vehicleDeliveries 401', async () => {
 test('GET /vehicleDeliveries 200 (user)', async () => {
   const { status, body } = await request(app())
     .get(`${apiRoot}`)
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(200)
   expect(Array.isArray(body)).toBe(true)
   expect(typeof body[0].userId).toEqual('object')
@@ -63,7 +63,7 @@ test('GET /vehicleDeliveries 401', async () => {
 test('GET /vehicleDeliveries/:id 200 (user)', async () => {
   const { status, body } = await request(app())
     .get(`${apiRoot}/${vehicleDelivery.id}`)
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
   expect(body.id).toEqual(vehicleDelivery.id)
@@ -79,14 +79,14 @@ test('GET /vehicleDeliveries/:id 401', async () => {
 test('GET /vehicleDeliveries/:id 404 (user)', async () => {
   const { status } = await request(app())
     .get(apiRoot + '/123456789098765432123456')
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(404)
 })
 
 test('PUT /vehicleDeliveries/:id 200 (user)', async () => {
   const { status, body } = await request(app())
     .put(`${apiRoot}/${vehicleDelivery.id}`)
-    .send({ access_token: userSession, rideId: 'test', rideCreatedat: 'test', vehicleId: 'test', pickupLatitude: 'test', pickupLongitude: 'test', dropLatitude: 'test', dropLongitude: 'test', status: 'test', pickup: 'test', drop: 'test', deliveryUserId: 'test', deliveryStartTime: 'test', deliveryEndTime: 'test' })
+    .send({ userAuth: userSession, rideId: 'test', rideCreatedat: 'test', vehicleId: 'test', pickupLatitude: 'test', pickupLongitude: 'test', dropLatitude: 'test', dropLongitude: 'test', status: 'test', pickup: 'test', drop: 'test', deliveryUserId: 'test', deliveryStartTime: 'test', deliveryEndTime: 'test' })
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
   expect(body.id).toEqual(vehicleDelivery.id)
@@ -109,7 +109,7 @@ test('PUT /vehicleDeliveries/:id 200 (user)', async () => {
 test('PUT /vehicleDeliveries/:id 401 (user) - another user', async () => {
   const { status } = await request(app())
     .put(`${apiRoot}/${vehicleDelivery.id}`)
-    .send({ access_token: anotherSession, rideId: 'test', rideCreatedat: 'test', vehicleId: 'test', pickupLatitude: 'test', pickupLongitude: 'test', dropLatitude: 'test', dropLongitude: 'test', status: 'test', pickup: 'test', drop: 'test', deliveryUserId: 'test', deliveryStartTime: 'test', deliveryEndTime: 'test' })
+    .send({ userAuth: anotherSession, rideId: 'test', rideCreatedat: 'test', vehicleId: 'test', pickupLatitude: 'test', pickupLongitude: 'test', dropLatitude: 'test', dropLongitude: 'test', status: 'test', pickup: 'test', drop: 'test', deliveryUserId: 'test', deliveryStartTime: 'test', deliveryEndTime: 'test' })
   expect(status).toBe(401)
 })
 
@@ -122,21 +122,21 @@ test('PUT /vehicleDeliveries/:id 401', async () => {
 test('PUT /vehicleDeliveries/:id 404 (user)', async () => {
   const { status } = await request(app())
     .put(apiRoot + '/123456789098765432123456')
-    .send({ access_token: anotherSession, rideId: 'test', rideCreatedat: 'test', vehicleId: 'test', pickupLatitude: 'test', pickupLongitude: 'test', dropLatitude: 'test', dropLongitude: 'test', status: 'test', pickup: 'test', drop: 'test', deliveryUserId: 'test', deliveryStartTime: 'test', deliveryEndTime: 'test' })
+    .send({ userAuth: anotherSession, rideId: 'test', rideCreatedat: 'test', vehicleId: 'test', pickupLatitude: 'test', pickupLongitude: 'test', dropLatitude: 'test', dropLongitude: 'test', status: 'test', pickup: 'test', drop: 'test', deliveryUserId: 'test', deliveryStartTime: 'test', deliveryEndTime: 'test' })
   expect(status).toBe(404)
 })
 
 test('DELETE /vehicleDeliveries/:id 204 (user)', async () => {
   const { status } = await request(app())
     .delete(`${apiRoot}/${vehicleDelivery.id}`)
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(204)
 })
 
 test('DELETE /vehicleDeliveries/:id 401 (user) - another user', async () => {
   const { status } = await request(app())
     .delete(`${apiRoot}/${vehicleDelivery.id}`)
-    .send({ access_token: anotherSession })
+    .send({ userAuth: anotherSession })
   expect(status).toBe(401)
 })
 
@@ -149,6 +149,6 @@ test('DELETE /vehicleDeliveries/:id 401', async () => {
 test('DELETE /vehicleDeliveries/:id 404 (user)', async () => {
   const { status } = await request(app())
     .delete(apiRoot + '/123456789098765432123456')
-    .query({ access_token: anotherSession })
+    .query({ userAuth: anotherSession })
   expect(status).toBe(404)
 })

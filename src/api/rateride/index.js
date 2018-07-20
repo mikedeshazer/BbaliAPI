@@ -14,7 +14,7 @@ const { rideId, vehicleName, starRating, textRating, userLat, userLon } = schema
  * @apiName CreateRateride
  * @apiGroup Rateride
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiParam rideId Rateride's rideId.
  * @apiParam vehicleName Rateride's vehicleName.
  * @apiParam starRating Rateride's starRating.
@@ -36,7 +36,7 @@ router.post('/',
  * @apiName RetrieveRaterides
  * @apiGroup Rateride
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiUse listParams
  * @apiSuccess {Object[]} raterides List of raterides.
  * @apiError {Object} 400 Some parameters may contain invalid values.

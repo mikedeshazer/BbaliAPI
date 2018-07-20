@@ -14,7 +14,7 @@ const { rideId, rideCreatedat, vehicleId, pickupLatitude, pickupLongitude, dropL
  * @apiName CreateVehicleDelivery
  * @apiGroup VehicleDelivery
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiParam rideId Vehicle delivery's rideId.
  * @apiParam rideCreatedat Vehicle delivery's rideCreatedat.
  * @apiParam vehicleId Vehicle delivery's vehicleId.
@@ -43,7 +43,7 @@ router.post('/',
  * @apiName RetrieveVehicleDeliveries
  * @apiGroup VehicleDelivery
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiUse listParams
  * @apiSuccess {Object[]} vehicleDeliveries List of vehicle deliveries.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -59,7 +59,7 @@ router.get('/',
  * @apiName RetrieveVehicleDelivery
  * @apiGroup VehicleDelivery
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiSuccess {Object} vehicleDelivery Vehicle delivery's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Vehicle delivery not found.
@@ -74,7 +74,7 @@ router.get('/:id',
  * @apiName UpdateVehicleDelivery
  * @apiGroup VehicleDelivery
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiParam rideId Vehicle delivery's rideId.
  * @apiParam rideCreatedat Vehicle delivery's rideCreatedat.
  * @apiParam vehicleId Vehicle delivery's vehicleId.
@@ -103,7 +103,7 @@ router.put('/:id',
  * @apiName DeleteVehicleDelivery
  * @apiGroup VehicleDelivery
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 404 Vehicle delivery not found.
  * @apiError 401 user access only.

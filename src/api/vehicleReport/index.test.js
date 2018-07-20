@@ -18,7 +18,7 @@ beforeEach(async () => {
 test('POST /vehicleReports 201 (user)', async () => {
   const { status, body } = await request(app())
     .post(`${apiRoot}`)
-    .send({ access_token: userSession, vehicleId: 'test', message: 'test', type: 'test', userLatitude: 'test', userLongitude: 'test' })
+    .send({ userAuth: userSession, vehicleId: 'test', message: 'test', type: 'test', userLatitude: 'test', userLongitude: 'test' })
   expect(status).toBe(201)
   expect(typeof body).toEqual('object')
   expect(body.vehicleId).toEqual('test')
@@ -38,7 +38,7 @@ test('POST /vehicleReports 401', async () => {
 test('GET /vehicleReports 200 (user)', async () => {
   const { status, body } = await request(app())
     .get(`${apiRoot}`)
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(200)
   expect(Array.isArray(body)).toBe(true)
   expect(typeof body[0].userId).toEqual('object')
@@ -53,7 +53,7 @@ test('GET /vehicleReports 401', async () => {
 test('GET /vehicleReports/:id 200 (user)', async () => {
   const { status, body } = await request(app())
     .get(`${apiRoot}/${vehicleReport.id}`)
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
   expect(body.id).toEqual(vehicleReport.id)
@@ -69,6 +69,6 @@ test('GET /vehicleReports/:id 401', async () => {
 test('GET /vehicleReports/:id 404 (user)', async () => {
   const { status } = await request(app())
     .get(apiRoot + '/123456789098765432123456')
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(404)
 })

@@ -34,7 +34,7 @@ If you choose to generate the authentication API, you can start to play with it.
 
 Create a user (sign up):
 ```bash
-curl -X POST http://0.0.0.0:9000/users -i -d "email=test@example.com&password=123456&access_token=MASTER_KEY_HERE"
+curl -X POST http://0.0.0.0:9000/users -i -d "email=test@example.com&password=123456&userAuth=MASTER_KEY_HERE"
 ```
 
 It will return something like:
@@ -52,7 +52,7 @@ HTTP/1.1 201 Created
 
 Authenticate the user (sign in):
 ```bash
-curl -X POST http://0.0.0.0:9000/auth -i -u test@example.com:123456 -d "access_token=MASTER_KEY_HERE"
+curl -X POST http://0.0.0.0:9000/auth -i -u test@example.com:123456 -d "userAuth=MASTER_KEY_HERE"
 ```
 
 It will return something like:
@@ -73,7 +73,7 @@ HTTP/1.1 201 Created
 
 Now you can use the `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9` token (it's usually greater than this) to call user protected APIs. 
 ```bash
-curl -X POST http://0.0.0.0:9000/articles -i -d "title=Awesome Article&content=Yeah Baby&access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+curl -X POST http://0.0.0.0:9000/articles -i -d "title=Awesome Article&content=Yeah Baby&userAuth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
 ```
 
 It will return something like:

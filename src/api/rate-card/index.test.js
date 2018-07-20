@@ -20,7 +20,7 @@ beforeEach(async () => {
 test('POST /rate-cards 201 (admin)', async () => {
   const { status, body } = await request(app())
     .post(`${apiRoot}`)
-    .send({ access_token: adminSession, distance: 'test', price: 'test' })
+    .send({ userAuth: adminSession, distance: 'test', price: 'test' })
   expect(status).toBe(201)
   expect(typeof body).toEqual('object')
   expect(body.distance).toEqual('test')
@@ -30,7 +30,7 @@ test('POST /rate-cards 201 (admin)', async () => {
 test('POST /rate-cards 401 (user)', async () => {
   const { status } = await request(app())
     .post(`${apiRoot}`)
-    .send({ access_token: userSession })
+    .send({ userAuth: userSession })
   expect(status).toBe(401)
 })
 
@@ -43,7 +43,7 @@ test('POST /rate-cards 401', async () => {
 test('GET /rate-cards 200 (admin)', async () => {
   const { status, body } = await request(app())
     .get(`${apiRoot}`)
-    .query({ access_token: adminSession })
+    .query({ userAuth: adminSession })
   expect(status).toBe(200)
   expect(Array.isArray(body)).toBe(true)
 })
@@ -51,7 +51,7 @@ test('GET /rate-cards 200 (admin)', async () => {
 test('GET /rate-cards 401 (user)', async () => {
   const { status } = await request(app())
     .get(`${apiRoot}`)
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(401)
 })
 
@@ -64,7 +64,7 @@ test('GET /rate-cards 401', async () => {
 test('GET /rate-cards/:id 200 (admin)', async () => {
   const { status, body } = await request(app())
     .get(`${apiRoot}/${rateCard.id}`)
-    .query({ access_token: adminSession })
+    .query({ userAuth: adminSession })
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
   expect(body.id).toEqual(rateCard.id)
@@ -73,7 +73,7 @@ test('GET /rate-cards/:id 200 (admin)', async () => {
 test('GET /rate-cards/:id 401 (user)', async () => {
   const { status } = await request(app())
     .get(`${apiRoot}/${rateCard.id}`)
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(401)
 })
 
@@ -86,14 +86,14 @@ test('GET /rate-cards/:id 401', async () => {
 test('GET /rate-cards/:id 404 (admin)', async () => {
   const { status } = await request(app())
     .get(apiRoot + '/123456789098765432123456')
-    .query({ access_token: adminSession })
+    .query({ userAuth: adminSession })
   expect(status).toBe(404)
 })
 
 test('PUT /rate-cards/:id 200 (admin)', async () => {
   const { status, body } = await request(app())
     .put(`${apiRoot}/${rateCard.id}`)
-    .send({ access_token: adminSession, distance: 'test', price: 'test' })
+    .send({ userAuth: adminSession, distance: 'test', price: 'test' })
   expect(status).toBe(200)
   expect(typeof body).toEqual('object')
   expect(body.id).toEqual(rateCard.id)
@@ -104,7 +104,7 @@ test('PUT /rate-cards/:id 200 (admin)', async () => {
 test('PUT /rate-cards/:id 401 (user)', async () => {
   const { status } = await request(app())
     .put(`${apiRoot}/${rateCard.id}`)
-    .send({ access_token: userSession })
+    .send({ userAuth: userSession })
   expect(status).toBe(401)
 })
 
@@ -117,21 +117,21 @@ test('PUT /rate-cards/:id 401', async () => {
 test('PUT /rate-cards/:id 404 (admin)', async () => {
   const { status } = await request(app())
     .put(apiRoot + '/123456789098765432123456')
-    .send({ access_token: adminSession, distance: 'test', price: 'test' })
+    .send({ userAuth: adminSession, distance: 'test', price: 'test' })
   expect(status).toBe(404)
 })
 
 test('DELETE /rate-cards/:id 204 (admin)', async () => {
   const { status } = await request(app())
     .delete(`${apiRoot}/${rateCard.id}`)
-    .query({ access_token: adminSession })
+    .query({ userAuth: adminSession })
   expect(status).toBe(204)
 })
 
 test('DELETE /rate-cards/:id 401 (user)', async () => {
   const { status } = await request(app())
     .delete(`${apiRoot}/${rateCard.id}`)
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(401)
 })
 
@@ -144,6 +144,6 @@ test('DELETE /rate-cards/:id 401', async () => {
 test('DELETE /rate-cards/:id 404 (admin)', async () => {
   const { status } = await request(app())
     .delete(apiRoot + '/123456789098765432123456')
-    .query({ access_token: adminSession })
+    .query({ userAuth: adminSession })
   expect(status).toBe(404)
 })

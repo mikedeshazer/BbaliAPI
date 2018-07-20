@@ -15,7 +15,7 @@ const { qrcodeIdentifier, name, type, currentStatus, lon, lat, description, occu
  * @apiName CreateVehicle
  * @apiGroup Vehicle
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiParam qrcodeIdentifier Vehicle's qrcodeIdentifier.
  * @apiParam name Vehicle's name.
  * @apiParam type Vehicle's type.
@@ -52,7 +52,7 @@ router.post('/rent',
  * @apiName RetrieveVehicles
  * @apiGroup Vehicle
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiUse listParams
  * @apiSuccess {Object[]} vehicles List of vehicles.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -68,7 +68,7 @@ router.get('/',
  * @apiName RetrieveVehicle
  * @apiGroup Vehicle
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiSuccess {Object} vehicle Vehicle's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Vehicle not found.
@@ -83,7 +83,7 @@ router.get('/:id',
  * @apiName UpdateVehicle
  * @apiGroup Vehicle
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiParam qrcodeIdentifier Vehicle's qrcodeIdentifier.
  * @apiParam name Vehicle's name.
  * @apiParam type Vehicle's type.
@@ -116,7 +116,7 @@ router.put('/:id',
  * @apiName DeleteVehicle
  * @apiGroup Vehicle
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 404 Vehicle not found.
  * @apiError 401 user access only.

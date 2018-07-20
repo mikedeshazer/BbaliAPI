@@ -14,7 +14,7 @@ const { distance, price } = schema.tree
  * @apiName CreateRateCard
  * @apiGroup RateCard
  * @apiPermission admin
- * @apiParam {String} access_token admin access token.
+ * @apiParam {String} userAuth admin access token.
  * @apiParam distance Rate card's distance.
  * @apiParam price Rate card's price.
  * @apiSuccess {Object} rateCard Rate card's data.
@@ -32,7 +32,7 @@ router.post('/',
  * @apiName RetrieveRateCards
  * @apiGroup RateCard
  * @apiPermission admin
- * @apiParam {String} access_token admin access token.
+ * @apiParam {String} userAuth admin access token.
  * @apiUse listParams
  * @apiSuccess {Object[]} rateCards List of rate cards.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -48,7 +48,7 @@ router.get('/',
  * @apiName RetrieveRateCard
  * @apiGroup RateCard
  * @apiPermission admin
- * @apiParam {String} access_token admin access token.
+ * @apiParam {String} userAuth admin access token.
  * @apiSuccess {Object} rateCard Rate card's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Rate card not found.
@@ -63,7 +63,7 @@ router.get('/:id',
  * @apiName UpdateRateCard
  * @apiGroup RateCard
  * @apiPermission admin
- * @apiParam {String} access_token admin access token.
+ * @apiParam {String} userAuth admin access token.
  * @apiParam distance Rate card's distance.
  * @apiParam price Rate card's price.
  * @apiSuccess {Object} rateCard Rate card's data.
@@ -81,7 +81,7 @@ router.put('/:id',
  * @apiName DeleteRateCard
  * @apiGroup RateCard
  * @apiPermission admin
- * @apiParam {String} access_token admin access token.
+ * @apiParam {String} userAuth admin access token.
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 404 Rate card not found.
  * @apiError 401 admin access only.

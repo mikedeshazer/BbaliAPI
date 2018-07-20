@@ -18,7 +18,7 @@ beforeEach(async () => {
 test('POST /raterides 201 (user)', async () => {
   const { status, body } = await request(app())
     .post(`${apiRoot}`)
-    .send({ access_token: userSession, rideId: 'test', vehicleName: 'test', starRating: 'test', textRating: 'test', userLat: 'test', userLon: 'test' })
+    .send({ userAuth: userSession, rideId: 'test', vehicleName: 'test', starRating: 'test', textRating: 'test', userLat: 'test', userLon: 'test' })
   expect(status).toBe(201)
   expect(typeof body).toEqual('object')
   expect(body.rideId).toEqual('test')
@@ -38,7 +38,7 @@ test('POST /raterides 401', async () => {
 test('GET /raterides 200 (user)', async () => {
   const { status, body } = await request(app())
     .get(`${apiRoot}`)
-    .query({ access_token: userSession })
+    .query({ userAuth: userSession })
   expect(status).toBe(200)
   expect(Array.isArray(body)).toBe(true)
 })

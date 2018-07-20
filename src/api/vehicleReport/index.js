@@ -14,7 +14,7 @@ const { vehicleId, message, type, userLatitude, userLongitude } = schema.tree
  * @apiName CreateVehicleReport
  * @apiGroup VehicleReport
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiParam vehicleId Vehicle report's vehicleId.
  * @apiParam message Vehicle report's message.
  * @apiParam type Vehicle report's type.
@@ -35,7 +35,7 @@ router.post('/',
  * @apiName RetrieveVehicleReports
  * @apiGroup VehicleReport
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiUse listParams
  * @apiSuccess {Object[]} vehicleReports List of vehicle reports.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -51,7 +51,7 @@ router.get('/',
  * @apiName RetrieveVehicleReport
  * @apiGroup VehicleReport
  * @apiPermission user
- * @apiParam {String} access_token user access token.
+ * @apiParam {String} userAuth user access token.
  * @apiSuccess {Object} vehicleReport Vehicle report's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Vehicle report not found.
