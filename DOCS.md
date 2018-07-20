@@ -1,27 +1,9 @@
-# ridesharing-test v0.0.0
+# ridesharing
 
 
 
 - [Auth](#auth)
 	- [Authenticate](#authenticate)
-	
-- [RateCard](#ratecard)
-	- [Create rate card](#create-rate-card)
-	- [Delete rate card](#delete-rate-card)
-	- [Retrieve rate card](#retrieve-rate-card)
-	- [Retrieve rate cards](#retrieve-rate-cards)
-	- [Update rate card](#update-rate-card)
-	
-- [Rateride](#rateride)
-	- [Create rateride](#create-rateride)
-	- [Retrieve raterides](#retrieve-raterides)
-	
-- [Ride](#ride)
-	- [Create ride](#create-ride)
-	- [Delete ride](#delete-ride)
-	- [Retrieve ride](#retrieve-ride)
-	- [Retrieve rides](#retrieve-rides)
-	- [Update ride](#update-ride)
 	
 - [User](#user)
 	- [change delivery user status](#change-delivery-user-status)
@@ -43,6 +25,35 @@
 	- [Retrieve vehicles](#retrieve-vehicles)
 	- [Update vehicle](#update-vehicle)
 	
+- [VehicleDelivery](#vehicledelivery)
+	- [Create vehicle delivery](#create-vehicle-delivery)
+	- [Delete vehicle delivery](#delete-vehicle-delivery)
+	- [Retrieve vehicle deliveries](#retrieve-vehicle-deliveries)
+	- [Retrieve vehicle delivery](#retrieve-vehicle-delivery)
+	- [Update vehicle delivery](#update-vehicle-delivery)
+	
+- [VehicleReport](#vehiclereport)
+	- [Create vehicle report](#create-vehicle-report)
+	- [Retrieve vehicle report](#retrieve-vehicle-report)
+	- [Retrieve vehicle reports](#retrieve-vehicle-reports)
+	
+- [RateCard](#ratecard)
+	- [Create rate card](#create-rate-card)
+	- [Delete rate card](#delete-rate-card)
+	- [Retrieve rate card](#retrieve-rate-card)
+	- [Retrieve rate cards](#retrieve-rate-cards)
+	- [Update rate card](#update-rate-card)
+	
+- [Rateride](#rateride)
+	- [Create rateride](#create-rateride)
+	- [Retrieve raterides](#retrieve-raterides)
+	
+- [Ride](#ride)
+	- [Create ride](#create-ride)
+	- [Delete ride](#delete-ride)
+	- [Retrieve ride](#retrieve-ride)
+	- [Retrieve rides](#retrieve-rides)
+	- [Update ride](#update-ride)
 
 
 # Auth
@@ -286,7 +297,7 @@
 
 
 
-	POST /delivery/status/:id
+	POST /delivery/status
 
 
 ### Parameters
@@ -555,5 +566,154 @@
 | make			| 			|  <p>Vehicle's make.</p>							|
 | year			| 			|  <p>Vehicle's year.</p>							|
 | model			| 			|  <p>Vehicle's model.</p>							|
+
+# VehicleDelivery
+
+## Create vehicle delivery
+
+
+
+	POST /vehicleDeliveries
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| rideId			| 			|  <p>Vehicle delivery's rideId.</p>							|
+| rideCreatedat			| 			|  <p>Vehicle delivery's rideCreatedat.</p>							|
+| vehicleId			| 			|  <p>Vehicle delivery's vehicleId.</p>							|
+| pickupLatitude			| 			|  <p>Vehicle delivery's pickupLatitude.</p>							|
+| pickupLongitude			| 			|  <p>Vehicle delivery's pickupLongitude.</p>							|
+| dropLatitude			| 			|  <p>Vehicle delivery's dropLatitude.</p>							|
+| dropLongitude			| 			|  <p>Vehicle delivery's dropLongitude.</p>							|
+| status			| 			|  <p>Vehicle delivery's status.</p>							|
+| pickup			| 			|  <p>Vehicle delivery's pickup.</p>							|
+| drop			| 			|  <p>Vehicle delivery's drop.</p>							|
+| deliveryUserId			| 			|  <p>Vehicle delivery's deliveryUserId.</p>							|
+| deliveryStartTime			| 			|  <p>Vehicle delivery's deliveryStartTime.</p>							|
+| deliveryEndTime			| 			|  <p>Vehicle delivery's deliveryEndTime.</p>							|
+
+## Delete vehicle delivery
+
+
+
+	DELETE /vehicleDeliveries/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+
+## Retrieve vehicle deliveries
+
+
+
+	GET /vehicleDeliveries
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Retrieve vehicle delivery
+
+
+
+	GET /vehicleDeliveries/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+
+## Update vehicle delivery
+
+
+
+	PUT /vehicleDeliveries/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| rideId			| 			|  <p>Vehicle delivery's rideId.</p>							|
+| rideCreatedat			| 			|  <p>Vehicle delivery's rideCreatedat.</p>							|
+| vehicleId			| 			|  <p>Vehicle delivery's vehicleId.</p>							|
+| pickupLatitude			| 			|  <p>Vehicle delivery's pickupLatitude.</p>							|
+| pickupLongitude			| 			|  <p>Vehicle delivery's pickupLongitude.</p>							|
+| dropLatitude			| 			|  <p>Vehicle delivery's dropLatitude.</p>							|
+| dropLongitude			| 			|  <p>Vehicle delivery's dropLongitude.</p>							|
+| status			| 			|  <p>Vehicle delivery's status.</p>							|
+| pickup			| 			|  <p>Vehicle delivery's pickup.</p>							|
+| drop			| 			|  <p>Vehicle delivery's drop.</p>							|
+| deliveryUserId			| 			|  <p>Vehicle delivery's deliveryUserId.</p>							|
+| deliveryStartTime			| 			|  <p>Vehicle delivery's deliveryStartTime.</p>							|
+| deliveryEndTime			| 			|  <p>Vehicle delivery's deliveryEndTime.</p>							|
+
+# VehicleReport
+
+## Create vehicle report
+
+
+
+	POST /vehicleReports
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| vehicleId			| 			|  <p>Vehicle report's vehicleId.</p>							|
+| message			| 			|  <p>Vehicle report's message.</p>							|
+| type			| 			|  <p>Vehicle report's type.</p>							|
+| userLatitude			| 			|  <p>Vehicle report's userLatitude.</p>							|
+| userLongitude			| 			|  <p>Vehicle report's userLongitude.</p>							|
+
+## Retrieve vehicle report
+
+
+
+	GET /vehicleReports/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+
+## Retrieve vehicle reports
+
+
+
+	GET /vehicleReports
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>user access token.</p>							|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
 
 

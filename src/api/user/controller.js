@@ -28,35 +28,35 @@ export const showMe = ({user}, res) => {
 }
 
 export const create = ({bodymen: {body}}, res, next) => {
-  var bitcoin = require("bitcoinjs-lib");
-  var keyPair = bitcoin.ECPair.makeRandom();
-  var address = keyPair.getAddress();
-  var pkey = keyPair.toWIF();
-  body.bitcoinAddress = address;
-  body.bitcoinKey = pkey;
-  var ethers = require('ethers');
-  var privateKey = "0x0123456789012345678901234567890123456789012345678901234567890123";
-  var wallet = ethers.Wallet.createRandom();
-
-  console.log("Address: " + wallet.address);
-  body.etherKey = privateKey;
-  body.etherAddress = wallet.address;
-
-  User.create(body)
-    .then((user) => user.view(true))
-    .then(success(res, 201))
-    .catch((err) => {
-      /* istanbul ignore else */
-      if (err.name === 'MongoError' && err.code === 11000) {
-        res.status(409).json({
-          valid: false,
-          param: 'email',
-          message: 'email already registered'
-        })
-      } else {
-        next(err)
-      }
-    })
+  if (!(body.email || body.phone)) {
+    res.status(500).send({error: true, msg: 'Email Or Phone Required'});
+  } else {
+    var bitcoin = require("bitcoinjs-lib");
+    var keyPair = bitcoin.ECPair.makeRandom();
+    var address = keyPair.getAddress();
+    var pkey = keyPair.toWIF();
+    body.bitcoinAddress = address;
+    body.bitcoinKey = pkey;
+    var ethers = require('ethers');
+    var privateKey = "0x0123456789012345678901234567890123456789012345678901234567890123";
+    var wallet = ethers.Wallet.createRandom();
+    body.etherKey = privateKey;
+    body.etherAddress = wallet.address;
+    User.create(body)
+      .then((user) => user.view(true))
+      .then(success(res, 201))
+      .catch((err) => {
+        /* istanbul ignore else */
+        if (err.name === 'MongoError' && err.code === 11000) {
+          res.status(409).json({
+            error: true,
+            message: 'email or phone already registered'
+          })
+        } else {
+          next(err)
+        }
+      })
+  }
 }
 
 export const createCharger = ({bodymen: {body}}, res, next) => {

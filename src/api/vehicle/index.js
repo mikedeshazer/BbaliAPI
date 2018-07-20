@@ -7,7 +7,7 @@ import { schema } from './model'
 export Vehicle, { schema } from './model'
 
 const router = new Router();
-const {vehicleId,paymentId,rideType,fromShop,radius} = "";
+const {vehicleId,paymentId,rideType,fromShop,range} = "";
 const { qrcodeIdentifier, name, type, currentStatus, lon, lat, description, occupiedByUserId, photoUrl, parkedAddress, parkedDescription, currentLockCode, chargedPercentageEstimate, make, year, model } = schema.tree
 
 /**
@@ -92,7 +92,8 @@ router.get('/:id',
  * @apiParam lat Vehicle's lat.
  * @apiParam description Vehicle's description.
  * @apiParam occupiedByUserId Vehicle's occupiedByUserId.
- * @apiParam photoUrl Vehicle's photoUrl.
+ * @apiPar
+ * 'am photoUrl Vehicle's photoUrl.
  * @apiParam parkedAddress Vehicle's parkedAddress.
  * @apiParam parkedDescription Vehicle's parkedDescription.
  * @apiParam currentLockCode Vehicle's currentLockCode.
@@ -126,7 +127,7 @@ router.delete('/:id',
 
 router.post('/nearby',
   token({ required: true }),
-  body({lat,lon, radius}),
+  body({lat, lon, range}),
   nearBy)
 
 export default router

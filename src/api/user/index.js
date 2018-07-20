@@ -19,7 +19,7 @@ import {
 import {schema} from './model'
 export User, {schema} from './model'
 const router = new Router()
-const {email, password, name, picture, role, userLat, userLon, address, description, capacity, status, radius} = schema.tree
+const {phone, email, password, role, userLat, userLon, address, description, capacity, status, radius, fullName, selectedLanguage} = schema.tree
 
 /**
  * @api {get} /users Retrieve users
@@ -76,9 +76,8 @@ router.get('/:id',
  * @apiError 401 Master access only.
  * @apiError 409 Email already registered.
  */
-router.post('/',
-  master(),
-  body({email, password, name, picture, role}),
+router.post('/create',
+  body({email, role, phone, fullName, userLat, userLon, selectedLanguage}),
   create)
 
 /**
@@ -159,7 +158,7 @@ router.post('/delivery/apply',
  */
 router.put('/:id',
   token({required: true}),
-  body({name, picture}),
+  body({email, role, phone, fullName, userLat, userLon, selectedLanguage}),
   update)
 
 /**

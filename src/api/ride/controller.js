@@ -51,16 +51,13 @@ export const unlockQR = ({user, bodymen: {body}}, res, next) => {
   if (!body.rideId) {
     res.status(500).send({error: 'Ride Id is required'})
   } else {
-    const passcode = Math.floor(100000 + Math.random() * 900000)
     Ride.findById(body.rideId)
       .then(notFound(res))
       .then((ride) => {
         Vehicle.findById(ride.vehicleId)
           .then((vehicle) => vehicle ? Object.assign(vehicle, {status: 'Unlocked'}).save() : null)
-      })
-      .then(() => {
         var final = {
-          passcode: passcode,
+          passcode: getUnlockCode(ride.vehicleId.toString()),
           Msg: 'Ride Unlocked Successfully'
         }
         res.status(200).send(final)
@@ -120,4 +117,42 @@ export const end = ({user, bodymen: {body}}, res, next) => {
       })
       .catch(next)
   }
+}
+
+function getUnlockCode(str) {
+  String.prototype.hashCode = function () {
+    var hash = 0, i, chr
+    if (this.length === 0) return hash
+    for (i = 0; i < this.length; i++) {
+      chr = this.charCodeAt(i)
+      hash = ((hash << 5) - hash) + chr
+      hash |= 0 // Convert to 32bit integer
+    }
+    return hash
+  }
+  var x = new Date()
+  x.setUTCHours(0)
+  var minutes = x.getMinutes()
+  var minuteDigits = 0
+  x.setSeconds(0)
+  if (minutes > 9) {
+    minuteDigits = minutes.toString().slice(-2, -1)
+  }
+  var minuteDigit = parseInt(minuteDigits)
+  var newMinutes = minuteDigit * 10
+  if (minutes > (newMinutes + 4)) {
+    minuteDigits = newMinutes + 5
+  } else {
+    minuteDigits = newMinutes
+  }
+
+  x.setMinutes(minuteDigits)
+  x.setMilliseconds(0)
+  var timeSeed = x.getTime()
+  console.log(x)
+  var seed = str.hashCode()
+  var rawUnlock = timeSeed / seed
+
+  var unlockCode = rawUnlock.toString().slice(-5, -1)
+  return unlockCode
 }
