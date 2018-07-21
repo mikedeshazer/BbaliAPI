@@ -80,7 +80,7 @@ const vehicleSchema = new Schema({
     transform: (obj, ret) => { delete ret._id }
   }
 })
-vehicleSchema.index({loc:'2d'})
+vehicleSchema.index({loc:'2dsphere'})
 vehicleSchema.methods = {
   view (full) {
     const view = {

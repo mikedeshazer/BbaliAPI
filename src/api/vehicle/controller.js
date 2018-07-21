@@ -312,4 +312,3 @@ export const checkout = ({user, bodymen: {body}, params}, res, next) => {
       .catch(next)
   }
 }
-
