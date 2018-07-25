@@ -1,20 +1,19 @@
-import { Router } from 'express'
-import { middleware as query } from 'querymen'
-import { middleware as body } from 'bodymen'
-import { password as passwordAuth, master, token } from '../../services/passport'
-import { index, showMe, show, create, update, updatePassword, destroy } from './controller'
-import { schema } from './model'
-export User, { schema } from './model'
-
+import {Router} from 'express'
+import {middleware as query} from 'querymen'
+import {middleware as body} from 'bodymen'
+import {password as passwordAuth, master, token} from '../../services/passport'
+import {index, showMe, show, create, update, updatePassword, destroy} from './controller'
+import {schema} from './model'
+export User, {schema} from './model'
 const router = new Router()
-const { email, password, name, picture, role } = schema.tree
+const {phone, email, password, role, userLat, userLon, address, description, capacity, status, radius, fullName, selectedLanguage} = schema.tree
 
 /**
  * @api {get} /users Retrieve users
  * @apiName RetrieveUsers
  * @apiGroup User
  * @apiPermission admin
- * @apiParam {String} access_token User access_token.
+ * @apiParam {String} userAuth User userAuth.
  * @apiUse listParams
  * @apiSuccess {Object[]} users List of users.
  * @apiError {Object} 400 Some parameters may contain invalid values.
@@ -30,7 +29,7 @@ router.get('/',
  * @apiName RetrieveCurrentUser
  * @apiGroup User
  * @apiPermission user
- * @apiParam {String} access_token User access_token.
+ * @apiParam {String} userAuth User userAuth.
  * @apiSuccess {Object} user User's data.
  */
 router.get('/me',
@@ -53,7 +52,7 @@ router.get('/:id',
  * @apiName CreateUser
  * @apiGroup User
  * @apiPermission master
- * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} userAuth Master userAuth.
  * @apiParam {String} email User's email.
  * @apiParam {String{6..}} password User's password.
  * @apiParam {String} [name] User's name.
@@ -64,9 +63,8 @@ router.get('/:id',
  * @apiError 401 Master access only.
  * @apiError 409 Email already registered.
  */
-router.post('/',
-  master(),
-  body({ email, password, name, picture, role }),
+router.post('/create',
+  body({email, role, phone, fullName, userLat, userLon, selectedLanguage}),
   create)
 
 /**
@@ -74,7 +72,7 @@ router.post('/',
  * @apiName UpdateUser
  * @apiGroup User
  * @apiPermission user
- * @apiParam {String} access_token User access_token.
+ * @apiParam {String} userAuth User userAuth.
  * @apiParam {String} [name] User's name.
  * @apiParam {String} [picture] User's picture.
  * @apiSuccess {Object} user User's data.
@@ -83,8 +81,8 @@ router.post('/',
  * @apiError 404 User not found.
  */
 router.put('/:id',
-  token({ required: true }),
-  body({ name, picture }),
+  token({required: true}),
+  body({email, role, phone, fullName, userLat, userLon, selectedLanguage}),
   update)
 
 /**
@@ -100,7 +98,7 @@ router.put('/:id',
  */
 router.put('/:id/password',
   passwordAuth(),
-  body({ password }),
+  body({password}),
   updatePassword)
 
 /**
@@ -108,13 +106,13 @@ router.put('/:id/password',
  * @apiName DeleteUser
  * @apiGroup User
  * @apiPermission admin
- * @apiParam {String} access_token User access_token.
+ * @apiParam {String} userAuth User userAuth.
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 401 Admin access only.
  * @apiError 404 User not found.
  */
 router.delete('/:id',
-  token({ required: true, roles: ['admin'] }),
+  token({required: true, roles: ['admin']}),
   destroy)
 
 export default router

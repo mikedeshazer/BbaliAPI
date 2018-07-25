@@ -1,0 +1,63 @@
+import { Vehicle } from '.'
+import { User } from '../user'
+
+let user, vehicle
+
+beforeEach(async () => {
+  user = await User.create({ email: 'a@a.com', password: '123456' })
+  vehicle = await Vehicle.create({ createdByAdminUserId: user, qrcodeIdentifier: 'test', name: 'test', type: 'test', currentStatus: 'test', lon: 'test', lat: 'test', description: 'test', occupiedByUserId: 'test', photoUrl: 'test', parkedAddress: 'test', parkedDescription: 'test', currentLockCode: 'test', chargedPercentageEstimate: 'test', make: 'test', year: 'test', model: 'test' })
+})
+
+describe('view', () => {
+  it('returns simple view', () => {
+    const view = vehicle.view()
+    expect(typeof view).toBe('object')
+    expect(view.id).toBe(vehicle.id)
+    expect(typeof view.createdByAdminUserId).toBe('object')
+    expect(view.createdByAdminUserId.id).toBe(user.id)
+    expect(view.qrcodeIdentifier).toBe(vehicle.qrcodeIdentifier)
+    expect(view.name).toBe(vehicle.name)
+    expect(view.type).toBe(vehicle.type)
+    expect(view.currentStatus).toBe(vehicle.currentStatus)
+    expect(view.lon).toBe(vehicle.lon)
+    expect(view.lat).toBe(vehicle.lat)
+    expect(view.description).toBe(vehicle.description)
+    expect(view.occupiedByUserId).toBe(vehicle.occupiedByUserId)
+    expect(view.photoUrl).toBe(vehicle.photoUrl)
+    expect(view.parkedAddress).toBe(vehicle.parkedAddress)
+    expect(view.parkedDescription).toBe(vehicle.parkedDescription)
+    expect(view.currentLockCode).toBe(vehicle.currentLockCode)
+    expect(view.chargedPercentageEstimate).toBe(vehicle.chargedPercentageEstimate)
+    expect(view.make).toBe(vehicle.make)
+    expect(view.year).toBe(vehicle.year)
+    expect(view.model).toBe(vehicle.model)
+    expect(view.createdAt).toBeTruthy()
+    expect(view.updatedAt).toBeTruthy()
+  })
+
+  it('returns full view', () => {
+    const view = vehicle.view(true)
+    expect(typeof view).toBe('object')
+    expect(view.id).toBe(vehicle.id)
+    expect(typeof view.createdByAdminUserId).toBe('object')
+    expect(view.createdByAdminUserId.id).toBe(user.id)
+    expect(view.qrcodeIdentifier).toBe(vehicle.qrcodeIdentifier)
+    expect(view.name).toBe(vehicle.name)
+    expect(view.type).toBe(vehicle.type)
+    expect(view.currentStatus).toBe(vehicle.currentStatus)
+    expect(view.lon).toBe(vehicle.lon)
+    expect(view.lat).toBe(vehicle.lat)
+    expect(view.description).toBe(vehicle.description)
+    expect(view.occupiedByUserId).toBe(vehicle.occupiedByUserId)
+    expect(view.photoUrl).toBe(vehicle.photoUrl)
+    expect(view.parkedAddress).toBe(vehicle.parkedAddress)
+    expect(view.parkedDescription).toBe(vehicle.parkedDescription)
+    expect(view.currentLockCode).toBe(vehicle.currentLockCode)
+    expect(view.chargedPercentageEstimate).toBe(vehicle.chargedPercentageEstimate)
+    expect(view.make).toBe(vehicle.make)
+    expect(view.year).toBe(vehicle.year)
+    expect(view.model).toBe(vehicle.model)
+    expect(view.createdAt).toBeTruthy()
+    expect(view.updatedAt).toBeTruthy()
+  })
+})
