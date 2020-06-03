@@ -52,11 +52,13 @@ const signIn = (req, res) => {
 
 const changePassword = (req, res) => {
   const decoded = req.token;
-
+  
   User.findById({ _id: decoded._id })
     .then(user => {
-      user.hashedPassword = user.encryptPassword(req.body.password);
-      return user.save();
+      if (user) {
+        user.hashedPassword = user.encryptPassword(req.body.password);
+        return user.save();
+      }
     })
     .then(user => {
       if (user) {
@@ -91,10 +93,41 @@ const resetPassword = (req, res) => {
     })
 }
 
+const getProfile = (req, res) => {
+  const decoded = req.token;
+
+  User.findById({_id: decoded._id}).select('email phoneNumber created -_id')
+    .then(user => {
+      if (user)
+        return resHandler(res, config.success, false, null, null, user);
+        
+      return resHandler(res, config.failed, true, errorMsg.NoExist);
+    })
+    .catch(err=> resHandler(res, config.failed, true, errorMsg.db))
+}
+
+const updateProfile = (req, res) => {
+  const decoded = req.token;
+  const { email, phoneNumber, password } = req.body;
+  
+  User.findOneAndUpdate({_id: decoded._id}, {$set: {}})
+}
+
+const deleteProfile = (req, res) => {
+  const decoded = req.token;
+
+  User.find({_id: decoded._id}).remove().exec()
+    .then(data => resHandler(res, config.success, false, null, null, {}))
+    .catch(err => resHandler(res, config.failed, true, errorMsg.db))
+}
+
 // routes
 router.post('/signup', validation.signup(), signUp);
 router.post('/login', validation.signin(), signIn);
 router.post('/forgotten', validation.checkEmail(), resetPassword);
 router.post('/change-password', [auth.checkAuth(), validation.changePassword()], changePassword);
+router.get('/profile', auth.checkAuth(), getProfile);
+router.put('/profile', [auth.checkAuth(), validation.updateProfile()], updateProfile);
+router.post('/profile', auth.checkAuth(), deleteProfile);
 
 module.exports = router;
